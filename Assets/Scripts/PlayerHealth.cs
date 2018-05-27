@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
@@ -68,7 +69,10 @@ public class PlayerHealth : MonoBehaviour
 
 					// ... Trigger the 'Die' animation state
 					anim.SetTrigger("Die");
-				}
+
+                    //Game Over
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
 			}
 		}
 	}
@@ -83,7 +87,7 @@ public class PlayerHealth : MonoBehaviour
 		Vector3 hurtVector = transform.position - enemy.position + Vector3.up * 5f;
 
 		// Add a force to the player in the direction of the vector and multiply by the hurtForce.
-		rigidbody2D.AddForce(hurtVector * hurtForce);
+		GetComponent<Rigidbody2D>().AddForce(hurtVector * hurtForce);
 
 		// Reduce the player's health by 10.
 		health -= damageAmount;
