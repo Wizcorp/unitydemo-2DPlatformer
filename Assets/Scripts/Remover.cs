@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Remover : MonoBehaviour
 {
 	public GameObject splash;
 
+    public GameObject GameOverUI;
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
@@ -41,7 +43,9 @@ public class Remover : MonoBehaviour
 	{			
 		// ... pause briefly
 		yield return new WaitForSeconds(2);
-		// ... and then reload the level.
-		Application.LoadLevel(Application.loadedLevel);
+        // ... and then reload the level.
+        //Application.LoadLevel(Application.loadedLevel);
+        // ... if the player die go back to MainMenu
+        SceneManager.LoadScene("MainMenu");
 	}
 }
