@@ -1,19 +1,69 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Pauser : MonoBehaviour {
-	private bool paused = false;
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyUp(KeyCode.P))
-		{
-			paused = !paused;
-		}
+    public static bool IsPaused = false;
 
-		if(paused)
-			Time.timeScale = 0;
-		else
-			Time.timeScale = 1;
-	}
+    public GameObject PauseMenuObject;
+    public GameObject MusicObject;
+
+    // Use this for initialization
+    void Start()
+    {
+        PauseMenuObject.SetActive(IsPaused);
+        Resume();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetButtonDown("Pause/Resume"))
+        {
+            if (IsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+    }
+
+    public void Resume()
+    {
+        IsPaused = false;
+        PauseMenuObject.SetActive(IsPaused);
+        Time.timeScale = 1;
+
+        if (MusicObject != null)
+            MusicObject.GetComponent<AudioSource>().volume = (float)0.1;
+    }
+
+    void Pause()
+    {
+        IsPaused = true;
+        PauseMenuObject.SetActive(IsPaused);
+        Time.timeScale = 0;
+
+        if (MusicObject != null)
+            MusicObject.GetComponent<AudioSource>().volume = 0;
+    }
+
+    //Quit the game
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ReturnMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

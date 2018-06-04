@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Remover : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class Remover : MonoBehaviour
 	{			
 		// ... pause briefly
 		yield return new WaitForSeconds(2);
-		// ... and then reload the level.
-		Application.LoadLevel(Application.loadedLevel);
-	}
+        // ... and then reload the level.
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

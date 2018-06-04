@@ -21,12 +21,14 @@ public class Gun : MonoBehaviour
 
 	void Update ()
 	{
-		// If the fire button is pressed...
-		if(Input.GetButtonDown("Fire1"))
+        if (Pauser.IsPaused)
+            return;
+        // If the fire button is pressed...
+        if (Input.GetButtonDown("Fire1"))
 		{
 			// ... set the animator Shoot trigger parameter and play the audioclip.
 			anim.SetTrigger("Shoot");
-			audio.Play();
+			GetComponent<AudioSource>().Play();
 
 			// If the player is facing right...
 			if(playerCtrl.facingRight)

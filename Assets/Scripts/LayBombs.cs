@@ -16,14 +16,16 @@ public class LayBombs : MonoBehaviour
 	void Awake ()
 	{
 		// Setting up the reference.
-		bombHUD = GameObject.Find("ui_bombHUD").guiTexture;
+		bombHUD = GameObject.Find("ui_bombHUD").GetComponent<GUITexture>();
 	}
 
 
 	void Update ()
 	{
-		// If the bomb laying button is pressed, the bomb hasn't been laid and there's a bomb to lay...
-		if(Input.GetButtonDown("Fire2") && !bombLaid && bombCount > 0)
+        if (Pauser.IsPaused)
+            return;
+        // If the bomb laying button is pressed, the bomb hasn't been laid and there's a bomb to lay...
+        if (Input.GetButtonDown("Fire2") && !bombLaid && bombCount > 0)
 		{
 			// Decrement the number of bombs.
 			bombCount--;
