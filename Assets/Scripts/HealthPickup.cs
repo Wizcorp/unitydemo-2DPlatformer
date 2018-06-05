@@ -39,7 +39,7 @@ public class HealthPickup : MonoBehaviour
 			pickupSpawner.StartCoroutine(pickupSpawner.DeliverPickup());
 
 			// Play the collection sound.
-			AudioSource.PlayClipAtPoint(collect,transform.position);
+			AudioSource.PlayClipAtPoint(collect,transform.position, SoundService.GetVolumeEffect());
 
 			// Destroy the crate.
 			Destroy(transform.root.gameObject);

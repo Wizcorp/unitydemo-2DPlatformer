@@ -8,6 +8,8 @@ public class Pauser : MonoBehaviour {
     public GameObject PauseMenuObject;
     public GameObject MusicObject;
 
+    public GameObject Score;
+
     // Use this for initialization
     void Start()
     {
@@ -54,16 +56,26 @@ public class Pauser : MonoBehaviour {
     //Quit the game
     public void QuitGame()
     {
+        SaveScore();
         Application.Quit();
+    }
+
+    public void SaveScore()
+    {
+        Score score = Score.GetComponent<Score>();
+        if (score != null)
+            Score.GetComponent<Score>().gameStats.SaveLevelStats(score.levelStats);
     }
 
     public void ReturnMainMenu()
     {
+        SaveScore();
         SceneManager.LoadScene("MainMenu");
     }
 
     public void RestartGame()
     {
+        SaveScore();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

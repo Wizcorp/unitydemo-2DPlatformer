@@ -9,19 +9,22 @@ public class SettingManager : MonoBehaviour
     public Toggle musicToggle;
     public Toggle effectToggle;
 
-    private string nameSettingFile = "gameSettings.json";
-
     public GameSettings gameSettings;
 
     void OnEnable()
     {
         gameSettings = new GameSettings();
 
+        LoadSettings();
+
+        volumeSlider.value = gameSettings.volume;
+        musicToggle.isOn = gameSettings.isMusicActive;
+        effectToggle.isOn = gameSettings.isEffectSoundActive;
+
         volumeSlider.onValueChanged.AddListener(delegate { OnChangeVolumeSlider(); });
         musicToggle.onValueChanged.AddListener(delegate { OnChangeMusicToggle(); });
         effectToggle.onValueChanged.AddListener(delegate { OnChangeEffectToggle(); });
 
-        LoadSettings();
     }
 
     public void OnChangeVolumeSlider()
@@ -41,22 +44,11 @@ public class SettingManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        string jsonData = JsonUtility.ToJson(gameSettings, true);
-        File.WriteAllText(Application.persistentDataPath + "/" + nameSettingFile, jsonData);
+        this.gameSettings.SaveSettings();
     }
 
     public void LoadSettings()
     {
-        string data = File.ReadAllText(Application.persistentDataPath + "/" + nameSettingFile);
-
-        if(data != null && data != "")
-            gameSettings = JsonUtility.FromJson<GameSettings>(data);
-
-        if (gameSettings != null)
-        {
-            volumeSlider.value = gameSettings.volume;
-            musicToggle.isOn = gameSettings.isMusicActive;
-            effectToggle.isOn = gameSettings.isEffectSoundActive;
-        }
+        this.gameSettings.LoadSettings();
     }
 }

@@ -585,6 +585,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  levelStats:
+    nameLevel: 
+    higthScore: 0
 --- !u!132 &335855070
 GUIText:
   m_ObjectHideFlags: 0
@@ -729,6 +732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PauseMenuObject: {fileID: 169155332}
   MusicObject: {fileID: 983741512}
+  Score: {fileID: 335855067}
 --- !u!1 &347089364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,6 +1745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 983741513}
   - component: {fileID: 983741514}
+  - component: {fileID: 983741515}
   m_Layer: 0
   m_Name: music
   m_TagString: Untagged
@@ -1771,7 +1776,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 317552566dd1ff9488d5d34e0c3ba4f4, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
@@ -1841,6 +1846,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &983741515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 983741512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e08029f617001643b4a912ba7f4467d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1035144488 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: bdd88e3de6e024ec1bacd58073808d06, type: 2}
@@ -3185,6 +3201,14 @@ Prefab:
     - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200004, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200004, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}

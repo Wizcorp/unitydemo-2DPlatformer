@@ -98,7 +98,7 @@ public class Enemy : MonoBehaviour
 
 		// Play a random audioclip from the deathClips array.
 		int i = Random.Range(0, deathClips.Length);
-		AudioSource.PlayClipAtPoint(deathClips[i], transform.position);
+		AudioSource.PlayClipAtPoint(deathClips[i], transform.position, SoundService.GetVolumeEffect());
 
 		// Create a vector that is just above the enemy.
 		Vector3 scorePos;

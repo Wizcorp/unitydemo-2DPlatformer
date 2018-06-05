@@ -91,7 +91,7 @@ public class PlayerControl : MonoBehaviour
 
 			// Play a random jump audio clip.
 			int i = Random.Range(0, jumpClips.Length);
-			AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
+			AudioSource.PlayClipAtPoint(jumpClips[i], transform.position, SoundService.GetVolumeEffect());
 
             //Stop the player if it's not in a ground
             if(!grounded)
