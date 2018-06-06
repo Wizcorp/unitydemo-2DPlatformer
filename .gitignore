@@ -2,8 +2,11 @@ Library/
 Temp/
 .vs/
 UnityPackageManager/
-unitydemo-2DPlatformer.csproj	
+	
 
 .DS_Store
 Thumbs.db
 *.sln
+unitydemo-2DPlatformer.csproj
+
+*.unitydemo-2DPlatformer.csproj
