@@ -11,14 +11,17 @@ public class GameSettings
 
     private string nameSettingFile = "gameSettings.json";
 
+    //Save the current settings in json file
     public void SaveSettings()
     {
         string jsonData = JsonUtility.ToJson(this, true);
         File.WriteAllText(Application.persistentDataPath + "/" + nameSettingFile, jsonData);
     }
 
+    //Load the settings by file or initialize settings
     public void LoadSettings()
     {
+        //Verify if the file exist
         if (File.Exists(Application.persistentDataPath + "/" + nameSettingFile))
         {
             string data = File.ReadAllText(Application.persistentDataPath + "/" + nameSettingFile);

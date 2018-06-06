@@ -91,7 +91,7 @@ public class PlayerControl : MonoBehaviour
 
 			// Play a random jump audio clip.
 			int i = Random.Range(0, jumpClips.Length);
-			AudioSource.PlayClipAtPoint(jumpClips[i], transform.position, SoundService.GetVolumeEffect());
+			AudioSource.PlayClipAtPoint(jumpClips[i], transform.position, SettingsService.GetVolumeEffect());
 
             //Stop the player if it's not in a ground
             if(!grounded)
@@ -135,7 +135,8 @@ public class PlayerControl : MonoBehaviour
 
 				// Play the new taunt.
 				GetComponent<AudioSource>().clip = taunts[tauntIndex];
-				GetComponent<AudioSource>().Play();
+                GetComponent<AudioSource>().volume = SettingsService.GetVolumeEffect();
+                GetComponent<AudioSource>().Play();
 			}
 		}
 	}

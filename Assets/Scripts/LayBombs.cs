@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class LayBombs : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class LayBombs : MonoBehaviour
 	public int bombCount = 0;			// How many bombs the player has.
 	public AudioClip bombsAway;			// Sound for when the player lays a bomb.
 	public GameObject bomb;				// Prefab of the bomb.
-
 
 	private GUITexture bombHUD;			// Heads up display of whether the player has a bomb or not.
 
@@ -34,7 +34,7 @@ public class LayBombs : MonoBehaviour
 			bombLaid = true;
 
 			// Play the bomb laying sound.
-			AudioSource.PlayClipAtPoint(bombsAway,transform.position, SoundService.GetVolumeEffect());
+			AudioSource.PlayClipAtPoint(bombsAway,transform.position, SettingsService.GetVolumeEffect());
 
 			// Instantiate the bomb prefab.
 			Instantiate(bomb, transform.position, transform.rotation);

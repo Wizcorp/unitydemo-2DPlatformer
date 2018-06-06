@@ -37,7 +37,7 @@ public class Bomb : MonoBehaviour
 	IEnumerator BombDetonation()
 	{
 		// Play the fuse audioclip.
-		AudioSource.PlayClipAtPoint(fuse, transform.position, SoundService.GetVolumeEffect());
+		AudioSource.PlayClipAtPoint(fuse, transform.position, SettingsService.GetVolumeEffect());
 
 		// Wait for 2 seconds.
 		yield return new WaitForSeconds(fuseTime);
@@ -86,7 +86,7 @@ public class Bomb : MonoBehaviour
 		Instantiate(explosion,transform.position, Quaternion.identity);
 
         // Play the explosion sound effect.
-        AudioSource.PlayClipAtPoint(boom, transform.position, SoundService.GetVolumeEffect());
+        AudioSource.PlayClipAtPoint(boom, transform.position, SettingsService.GetVolumeEffect());
 
 		// Destroy the bomb.
 		Destroy (gameObject);

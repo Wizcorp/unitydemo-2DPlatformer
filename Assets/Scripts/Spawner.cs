@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour
     public float spawnTime = 5f;		// The amount of time between each spawn.
 	public float spawnDelay = 3f;		// The amount of time before spawning starts.
 
+    //Configure the direction of the ennemy spawn
     public Direction direction;
 
     public GameObject[] enemies;		// Array of enemy prefabs.
@@ -48,6 +49,7 @@ public class Spawner : MonoBehaviour
         switch (direction)
         {
             case Direction.left:
+                //Just inverse ennemy
                 enemyScale = ennemy.transform.localScale;
                 if (enemyScale.x > 0)
                 {
@@ -59,6 +61,7 @@ public class Spawner : MonoBehaviour
                 break;
             case Direction.random:
             default:
+                //Use random number to randomize the start direction of the ennemy spawn
                 int a = Random.Range(0, 2);
                 enemyScale = ennemy.transform.localScale;
                 if (a == 1)
@@ -74,7 +77,5 @@ public class Spawner : MonoBehaviour
                 ennemy.transform.localScale = enemyScale;
                 break;
         }
-        // Multiply the x component of localScale by -1.
-        
     }
 }

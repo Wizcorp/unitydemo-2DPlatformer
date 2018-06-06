@@ -15,8 +15,8 @@ public class BackgroundPropSpawner : MonoBehaviour
 
 	void Start ()
 	{
-		// Set the random seed so it's not the same each game.
-		Random.seed = System.DateTime.Today.Millisecond;
+        // Set the random seed so it's not the same each game.
+        Random.InitState(System.DateTime.Today.Millisecond);
 
 		// Start the Spawn coroutine.
 		StartCoroutine("Spawn");

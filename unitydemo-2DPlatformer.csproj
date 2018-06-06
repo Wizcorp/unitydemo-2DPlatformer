@@ -245,7 +245,8 @@
     <Compile Include="Assets\Scripts\Global\GameStats.cs" />
     <Compile Include="Assets\Scripts\Global\JsonHelper.cs" />
     <Compile Include="Assets\Scripts\Global\LevelStats.cs" />
-    <Compile Include="Assets\Scripts\Global\SoundService.cs" />
+    <Compile Include="Assets\Scripts\Global\SettingsService.cs" />
+    <Compile Include="Assets\Scripts\Global\StatsService.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
     <Compile Include="Assets\Scripts\HealthPickup.cs" />
     <Compile Include="Assets\Scripts\LayBombs.cs" />

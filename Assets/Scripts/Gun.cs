@@ -28,7 +28,8 @@ public class Gun : MonoBehaviour
 		{
 			// ... set the animator Shoot trigger parameter and play the audioclip.
 			anim.SetTrigger("Shoot");
-			GetComponent<AudioSource>().Play();
+            GetComponent<AudioSource>().volume = SettingsService.GetVolumeEffect();
+            GetComponent<AudioSource>().Play();
 
 			// If the player is facing right...
 			if(playerCtrl.facingRight)

@@ -9,15 +9,13 @@ public class LevelMenu : MonoBehaviour {
 
     public Transform[] levelButtons;             // Array of all the levelButton.
 
-    private GameStats gameStats =  new GameStats();
-
     void OnEnable()
     {
         LevelData levelData;
 
         List<LevelData> levelDataToUnlock;
 
-        LevelStats levelStats;
+        int highScore;
 
         //First, calcul the link between level
         for (int i = 0; i < levelButtons.Length; i++)
@@ -26,7 +24,7 @@ public class LevelMenu : MonoBehaviour {
             if(levelData == null)
                 continue;
 
-            levelStats = gameStats.LoadLevelStats(levelData.nameLevel);
+            highScore = StatsService.GetHighScore(levelData.nameLevel);
 
             levelDataToUnlock = levelData.buttonLevelToUnlock.ToList().Select(x => x.GetComponent<LevelData>()).ToList();
 
@@ -37,7 +35,7 @@ public class LevelMenu : MonoBehaviour {
                     if (dt.scoreLock != 0)
                     {
                         dt.lockedBy = dt.levelTextObject.GetComponent<Text>().text == "" ? levelData.nameLevel : dt.levelTextObject.GetComponent<Text>().text;
-                        dt.lockedHighScoreBy = levelStats.higthScore;
+                        dt.lockedHighScoreBy = highScore;
                         dt.locked = true;
                     }
                     else
@@ -55,28 +53,21 @@ public class LevelMenu : MonoBehaviour {
             if (levelData == null)
                 continue;
 
-            levelStats = gameStats.LoadLevelStats(levelData.nameLevel);
-
-            if (levelStats != null)
+            highScore = StatsService.GetHighScore(levelData.nameLevel);
+ 
+            if (levelData.scoreLock == 0)
             {
-                if (levelData.scoreLock == 0)
+                levelData.locked = false;
+            }
+            else if (levelData.locked)
+            {
+                if(levelData.lockedHighScoreBy >= levelData.scoreLock)
                 {
                     levelData.locked = false;
-                }
-                else if (levelData.locked)
-                {
-                    if(levelData.lockedHighScoreBy > levelData.scoreLock)
-                    {
-                        levelData.locked = false;
-                    } 
-                }
+                } 
+            }
 
-                ChangeStateLock(levelData, levelButtons[i], levelStats.higthScore, levelData.lockedBy);
-            }
-            else
-            {
-                ChangeStateLock(levelData, levelButtons[i], 0, levelData.lockedBy);
-            }
+            ChangeStateLock(levelData, levelButtons[i], highScore, levelData.lockedBy);
         }
     }
 

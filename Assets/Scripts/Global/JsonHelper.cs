@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class JsonHelper
 {
+    //Tool use to use List/Array with json
+    //https://forum.unity.com/threads/how-to-load-an-array-with-jsonutility.375735/
+
     public static T[] FromJson<T>(string json)
     {
         Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);

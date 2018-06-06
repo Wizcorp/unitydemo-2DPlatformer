@@ -93,7 +93,7 @@ public class PlayerHealth : MonoBehaviour
 
 		// Play a random clip of the player getting hurt.
 		int i = Random.Range (0, ouchClips.Length);
-		AudioSource.PlayClipAtPoint(ouchClips[i], transform.position, SoundService.GetVolumeEffect());
+		AudioSource.PlayClipAtPoint(ouchClips[i], transform.position, SettingsService.GetVolumeEffect());
 	}
 
 

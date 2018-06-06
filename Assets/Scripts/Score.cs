@@ -6,22 +6,18 @@ public class Score : MonoBehaviour
 {
 	public int score = 0;                   // The player's score.
 
-    [HideInInspector]
-    public GameStats gameStats = new GameStats();
-    [HideInInspector]
-    public LevelStats levelStats = new LevelStats();
-
     private PlayerControl playerControl;	// Reference to the player control script.
 	private int previousScore = 0;			// The score in the previous frame.
 
+    [HideInInspector]
+    public int highScore = 0;
 
-	void Awake ()
+    void Awake ()
 	{
 		// Setting up the reference.
 		playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
 
-        levelStats = gameStats.LoadLevelStats(SceneManager.GetActiveScene().name);
-
+        highScore = StatsService.GetHighScore(SceneManager.GetActiveScene().name);
     }
 
 
@@ -35,11 +31,13 @@ public class Score : MonoBehaviour
         {
             // ... play a taunt.
             playerControl.StartCoroutine(playerControl.Taunt());
-            if (score > levelStats.higthScore)
-                levelStats.higthScore = score;
+            if (this.score > this.highScore)
+            {
+                this.highScore = score;
+                StatsService.ChangeHighScore(SceneManager.GetActiveScene().name, score);
+            }   
         }
 			
-
 		// Set the previous score to this frame's score.
 		previousScore = score;
 	}

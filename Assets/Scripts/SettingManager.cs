@@ -9,13 +9,11 @@ public class SettingManager : MonoBehaviour
     public Toggle musicToggle;
     public Toggle effectToggle;
 
-    public GameSettings gameSettings;
+    private GameSettings gameSettings = SettingsService.gameSettings;
 
     void OnEnable()
     {
-        gameSettings = new GameSettings();
-
-        LoadSettings();
+        this.gameSettings.LoadSettings();
 
         volumeSlider.value = gameSettings.volume;
         musicToggle.isOn = gameSettings.isMusicActive;
@@ -45,10 +43,5 @@ public class SettingManager : MonoBehaviour
     public void SaveSettings()
     {
         this.gameSettings.SaveSettings();
-    }
-
-    public void LoadSettings()
-    {
-        this.gameSettings.LoadSettings();
     }
 }
