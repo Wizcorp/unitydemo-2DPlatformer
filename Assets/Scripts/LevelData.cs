@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class LevelData : MonoBehaviour {
 
-    public int scoreLock;
+    public int scoreLock;                       // Number of score to unlock level.
 
-    public string nameLevel;
+    public string nameLevel;                    // Name of level.
 
     [HideInInspector]
-    public bool locked = true;
+    public bool locked = true;                  // Whether or not the level is lo locked.
     [HideInInspector]
-    public string lockedBy = "";
+    public string lockedBy = "";                // The name of the level that blocks it.
     [HideInInspector]
-    public int lockedHighScoreBy = 0;
+    public int lockedHighScoreBy = 0;           // And it high score.
 
-    public Transform[] buttonLevelToUnlock;
-    public GameObject levelTextObject;
-    public GameObject lockedObject;
-    public GameObject highScoreObject;
+    public Transform[] buttonLevelToUnlock;     // Button level of the level to unlock
+
+    public GameObject levelTextObject;          // Text object of the actual button
+    public GameObject lockedObject;             // Locked object of the actual button
+    public GameObject highScoreObject;          // High score text object of the actual button
 }

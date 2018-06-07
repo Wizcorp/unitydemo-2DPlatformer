@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour {
 
-	// Use this for initialization
-	void Awake () {
-
-    }
-
+    //Apply music setting volume
     void Update()
     {
         this.GetComponent<AudioSource>().volume = SettingsService.GetVolumeMusic();

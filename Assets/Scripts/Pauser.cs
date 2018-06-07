@@ -6,7 +6,6 @@ public class Pauser : MonoBehaviour {
     public static bool IsPaused = false;
 
     public GameObject PauseMenuObject;
-    public GameObject MusicObject;
 
     // Use this for initialization
     void Start()
@@ -31,25 +30,27 @@ public class Pauser : MonoBehaviour {
         }
     }
 
+    //Desactivate PauseMenu
     public void Resume()
     {
         IsPaused = false;
         PauseMenuObject.SetActive(IsPaused);
         Time.timeScale = 1;
 
-        if (MusicObject != null)
-            MusicObject.GetComponent<AudioSource>().volume = (float)0.1;
+        SettingsService.isPaused = IsPaused;
     }
 
+    //Activate PauseMenu
     void Pause()
     {
         IsPaused = true;
         PauseMenuObject.SetActive(IsPaused);
         Time.timeScale = 0;
 
-        if (MusicObject != null)
-            MusicObject.GetComponent<AudioSource>().volume = 0;
+        //Reactivate music
+        SettingsService.isPaused = IsPaused;
     }
+
 
     //Quit the game
     public void QuitGame()

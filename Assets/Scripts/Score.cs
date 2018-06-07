@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Score : MonoBehaviour
 	private int previousScore = 0;			// The score in the previous frame.
 
     [HideInInspector]
-    public int highScore = 0;
+    public int highScore = 0;               // highScore of level
 
     void Awake ()
 	{
@@ -24,7 +25,7 @@ public class Score : MonoBehaviour
 	void Update ()
 	{
 		// Set the score text.
-		GetComponent<GUIText>().text = "Score: " + score;
+		GetComponent<Text>().text = "Score: " + score;
 
 		// If the score has changed...
 		if(previousScore != score)

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class Remover : MonoBehaviour
 {
 	public GameObject splash;
-    public GameObject gameOver;
+    public GameObject gameOver;         // the gameOver Object
 
 	void OnTriggerEnter2D(Collider2D col)
 	{

@@ -71,6 +71,7 @@ public class LevelMenu : MonoBehaviour {
         }
     }
 
+    //Change the state lock of an button
     private void ChangeStateLock(LevelData levelData, Transform button, int score = 0, string levelToUnlock = "")
     {
         if (levelData.locked)

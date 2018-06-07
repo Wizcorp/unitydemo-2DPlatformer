@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameStats
 {
-    private string nameSettingFile = "gameStats.json";
+    private string nameSettingFile = "gameStats.json";  // Name of the stats file.
 
-    public List<LevelStats> levelStats;
+    public List<LevelStats> levelStats;                 // List of level stats of each level.
 
     //Get the LevelStats of level by nameLevel
     public LevelStats GetLevelStats(string nameLevel)

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class GameSettings
 {
-    public float volume;
+    public float volume;                // Volume settings of effect and music.
 
-    public bool isMusicActive;
-    public bool isEffectSoundActive;
+    public bool isMusicActive;          // Whether or not the music is activated.
+    public bool isEffectSoundActive;    // Whether or not the effect is activated.
 
-    private string nameSettingFile = "gameSettings.json";
+    private string nameSettingFile = "gameSettings.json"; // Name of the settings file.
 
     //Save the current settings in json file
     public void SaveSettings()

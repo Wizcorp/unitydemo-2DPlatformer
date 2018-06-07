@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
 {
-    public Slider volumeSlider;
+    public Slider volumeSlider;                                         // Slider of volume setting
 
-    public Toggle musicToggle;
-    public Toggle effectToggle;
+    public Toggle musicToggle;                                          // Toggle of music setting
+    public Toggle effectToggle;                                         // Toggle of effect setting
 
     private GameSettings gameSettings = SettingsService.gameSettings;
 
