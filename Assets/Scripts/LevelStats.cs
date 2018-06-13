@@ -5,6 +5,6 @@ using UnityEngine;
 [Serializable]
 public class LevelStats
 {
-    public string nameLevel;        // Name of level.
-    public int higthScore;          // High score of level.
+	public string nameLevel;        // Name of level.
+	public int higthScore;          // High score of level.
 }

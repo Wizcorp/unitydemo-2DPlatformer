@@ -51,3 +51,15 @@ Other change :
 - Fix Obsolete code (score, scoreshadow et bomb)
 
 - Add Changelog
+
+---------------------------------
+---- Commits on Jun 13, 2018 ----
+---------------------------------
+
+- Get the community version of .gitignore
+
+- Change the isPaused in Pauser.cs and change the use of this variable in another class (now we use SettingsService.isPaused)
+
+- Optimization of the application of the volume of the gun and the music
+
+- Fix the tabulation

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Rocket : MonoBehaviour 
+public class Rocket : MonoBehaviour
 {
-	public GameObject explosion;		// Prefab of explosion effect.
+	public GameObject explosion;        // Prefab of explosion effect.
 
 
-	void Start () 
+	void Start()
 	{
 		// Destroy the rocket after 2 seconds if it doesn't get destroyed before then.
 		Destroy(gameObject, 2);
@@ -18,15 +18,15 @@ public class Rocket : MonoBehaviour
 		// Create a quaternion with a random rotation in the z-axis.
 		Quaternion randomRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
 
-        // Instantiate the explosion where the rocket is with the random rotation.
-        explosion.GetComponent<AudioSource>().volume = SettingsService.GetVolumeEffect();
-        Instantiate(explosion, transform.position, randomRotation);
+		// Instantiate the explosion where the rocket is with the random rotation.
+		explosion.GetComponent<AudioSource>().volume = SettingsService.GetVolumeEffect();
+		Instantiate(explosion, transform.position, randomRotation);
 	}
-	
-	void OnTriggerEnter2D (Collider2D col) 
+
+	void OnTriggerEnter2D(Collider2D col)
 	{
 		// If it hits an enemy...
-		if(col.tag == "Enemy")
+		if (col.tag == "Enemy")
 		{
 			// ... find the Enemy script and call the Hurt function.
 			col.gameObject.GetComponent<Enemy>().Hurt();
@@ -35,26 +35,26 @@ public class Rocket : MonoBehaviour
 			OnExplode();
 
 			// Destroy the rocket.
-			Destroy (gameObject);
+			Destroy(gameObject);
 		}
 		// Otherwise if it hits a bomb crate...
-		else if(col.tag == "BombPickup")
+		else if (col.tag == "BombPickup")
 		{
 			// ... find the Bomb script and call the Explode function.
 			col.gameObject.GetComponent<Bomb>().Explode();
 
 			// Destroy the bomb crate.
-			Destroy (col.transform.root.gameObject);
+			Destroy(col.transform.root.gameObject);
 
 			// Destroy the rocket.
-			Destroy (gameObject);
+			Destroy(gameObject);
 		}
 		// Otherwise if the player manages to shoot himself...
-		else if(col.gameObject.tag != "Player")
+		else if (col.gameObject.tag != "Player")
 		{
 			// Instantiate the explosion and destroy the rocket.
 			OnExplode();
-			Destroy (gameObject);
+			Destroy(gameObject);
 		}
 	}
 }

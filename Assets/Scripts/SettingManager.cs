@@ -4,44 +4,44 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
 {
-    public Slider volumeSlider;                                         // Slider of volume setting
+	public Slider volumeSlider;                                         // Slider of volume setting
 
-    public Toggle musicToggle;                                          // Toggle of music setting
-    public Toggle effectToggle;                                         // Toggle of effect setting
+	public Toggle musicToggle;                                          // Toggle of music setting
+	public Toggle effectToggle;                                         // Toggle of effect setting
 
-    private GameSettings gameSettings = SettingsService.gameSettings;
+	private GameSettings gameSettings = SettingsService.gameSettings;
 
-    void OnEnable()
-    {
-        this.gameSettings.LoadSettings();
+	void OnEnable()
+	{
+		this.gameSettings.LoadSettings();
 
-        volumeSlider.value = gameSettings.volume;
-        musicToggle.isOn = gameSettings.isMusicActive;
-        effectToggle.isOn = gameSettings.isEffectSoundActive;
+		volumeSlider.value = gameSettings.volume;
+		musicToggle.isOn = gameSettings.isMusicActive;
+		effectToggle.isOn = gameSettings.isEffectSoundActive;
 
-        volumeSlider.onValueChanged.AddListener(delegate { OnChangeVolumeSlider(); });
-        musicToggle.onValueChanged.AddListener(delegate { OnChangeMusicToggle(); });
-        effectToggle.onValueChanged.AddListener(delegate { OnChangeEffectToggle(); });
+		volumeSlider.onValueChanged.AddListener(delegate { OnChangeVolumeSlider(); });
+		musicToggle.onValueChanged.AddListener(delegate { OnChangeMusicToggle(); });
+		effectToggle.onValueChanged.AddListener(delegate { OnChangeEffectToggle(); });
 
-    }
+	}
 
-    public void OnChangeVolumeSlider()
-    {
-        gameSettings.volume = volumeSlider.value;
-    }
+	public void OnChangeVolumeSlider()
+	{
+		gameSettings.volume = volumeSlider.value;
+	}
 
-    public void OnChangeMusicToggle()
-    {
-        gameSettings.isMusicActive = musicToggle.isOn;
-    }
+	public void OnChangeMusicToggle()
+	{
+		gameSettings.isMusicActive = musicToggle.isOn;
+	}
 
-    public void OnChangeEffectToggle()
-    {
-        gameSettings.isEffectSoundActive = effectToggle.isOn;
-    }
+	public void OnChangeEffectToggle()
+	{
+		gameSettings.isEffectSoundActive = effectToggle.isOn;
+	}
 
-    public void SaveSettings()
-    {
-        this.gameSettings.SaveSettings();
-    }
+	public void SaveSettings()
+	{
+		this.gameSettings.SaveSettings();
+	}
 }

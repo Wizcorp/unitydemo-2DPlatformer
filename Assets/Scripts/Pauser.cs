@@ -2,72 +2,65 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Pauser : MonoBehaviour {
-    public static bool IsPaused = false;
+public class Pauser : MonoBehaviour
+{
+	public GameObject PauseMenuObject;
 
-    public GameObject PauseMenuObject;
+	// Use this for initialization
+	void Start()
+	{
+		Resume();
+	}
 
-    // Use this for initialization
-    void Start()
-    {
-        PauseMenuObject.SetActive(IsPaused);
-        Resume();
-    }
+	// Update is called once per frame
+	void Update()
+	{
+		if (Input.GetButtonDown("Pause/Resume"))
+		{
+			if (SettingsService.isPaused)
+			{
+				Resume();
+			}
+			else
+			{
+				Pause();
+			}
+		}
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetButtonDown("Pause/Resume"))
-        {
-            if (IsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
-    }
+	//Desactivate PauseMenu
+	public void Resume()
+	{
+		SettingsService.isPaused = false;
+		PauseMenuObject.SetActive(SettingsService.isPaused);
+		Time.timeScale = 1;
+	}
 
-    //Desactivate PauseMenu
-    public void Resume()
-    {
-        IsPaused = false;
-        PauseMenuObject.SetActive(IsPaused);
-        Time.timeScale = 1;
-
-        SettingsService.isPaused = IsPaused;
-    }
-
-    //Activate PauseMenu
-    void Pause()
-    {
-        IsPaused = true;
-        PauseMenuObject.SetActive(IsPaused);
-        Time.timeScale = 0;
-
-        //Reactivate music
-        SettingsService.isPaused = IsPaused;
-    }
+	//Activate PauseMenu
+	void Pause()
+	{
+		SettingsService.isPaused = true;
+		PauseMenuObject.SetActive(SettingsService.isPaused);
+		Time.timeScale = 0;
+	}
 
 
-    //Quit the game
-    public void QuitGame()
-    {
-        StatsService.SaveLevelStats();
-        Application.Quit();
-    }
+	//Quit the game
+	public void QuitGame()
+	{
+		StatsService.SaveLevelStats();
+		Application.Quit();
+	}
 
-    public void ReturnMainMenu()
-    {
-        StatsService.SaveLevelStats();
-        SceneManager.LoadScene("MainMenu");
-    }
+	public void ReturnMainMenu()
+	{
+		StatsService.SaveLevelStats();
+		SceneManager.LoadScene("MainMenu");
+	}
 
-    public void RestartGame()
-    {
-        StatsService.SaveLevelStats();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+	public void RestartGame()
+	{
+		StatsService.SaveLevelStats();
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
 }
