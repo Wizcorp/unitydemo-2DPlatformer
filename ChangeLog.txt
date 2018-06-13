@@ -1,0 +1,65 @@
+--------------------------------
+---- Commits on Jun 5, 2018 ----
+--------------------------------
+
+Update Unity version to 2017.4.4f1:
+- Fix regressions and obsoletes code
+
+Main menu feature :
+- Add new scene (MainMenu) and new script (MainMenu.cs, OptionsMenu.cs)
+- Add select menu in in same scene (PlayMenu)
+- Add options menu in same scene (OptionsMenu). Change options use SettingManager.cs and GameSettings.cs to save and load settings in a json file : "gameSettings.json"
+
+New level feature :
+- Add new scene (Level2) and modify script
+- Script theme forest with new sprites created by @Sihg87 and used with her permission
+
+PauseMenu feature
+- Add PauseMenu in Level1 and Level 2
+- Change Pauser.cs script to implemant the PauseMenu
+
+Other change :
+- Now the player can chain several jumps (actualy it's define to 2 jump in  PlayerControl.cs)
+- Prevents actions during when the pause it's enable
+- Prevents the player from leaving the level boundry (Add insibleWall)
+- Gives the possibility to configure the starting rotation of the enemy (left, right or random, this is configurable on spawners)
+
+--------------------------------
+---- Commits on Jun 6, 2018 ----
+--------------------------------
+
+- Fix many problemes witth gameSettings
+
+- Add a progression : scoreLock with link between level, reach an amount of score to unlock levelX
+
+--------------------------------
+---- Commits on Jun 7, 2018 ----
+--------------------------------
+
+- Now the options modify in the mainMenu is apply in the differents levels. The music and the different effects has been modify to take the sound option.
+
+- Add StatsService and SettingsService (static class) to manage score and options more easly
+
+- Other fix
+
+- Optimize code and add many comments
+
+- Add comment
+
+- Fix GameOver
+- Fix Score
+- Fix Obsolete code (score, scoreshadow et bomb)
+
+- Add Changelog
+
+---------------------------------
+---- Commits on Jun 13, 2018 ----
+---------------------------------
+
+- Get the community version of .gitignore
+
+- Change the isPaused in Pauser.cs and change the use of this variable in another class (now we use SettingsService.isPaused)
+
+- Optimization of the application of the volume of the gun and the music
+
+- Fix the tabulation
