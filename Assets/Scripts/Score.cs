@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Score : MonoBehaviour
@@ -20,10 +21,10 @@ public class Score : MonoBehaviour
 	void Update ()
 	{
 		// Set the score text.
-		guiText.text = "Score: " + score;
+		GetComponent<Text>().text = "Score: " + score;
 
 		// If the score has changed...
-		if(previousScore != score)
+		if(previousScore != score && playerControl != null)
 			// ... play a taunt.
 			playerControl.StartCoroutine(playerControl.Taunt());
 
