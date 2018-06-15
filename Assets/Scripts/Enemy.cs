@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 		foreach(Collider2D c in frontHits)
 		{
 			// If any of the colliders is an Obstacle...
-			if(c.tag == "Obstacle")
+			if(c.tag == "Obstacle" || c.tag == "ground")
 			{
 				// ... Flip the enemy and stop checking the other colliders.
 				Flip ();
@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
 		}
 
 		// Set the enemy's velocity to moveSpeed in the x direction.
-		rigidbody2D.velocity = new Vector2(transform.localScale.x * moveSpeed, rigidbody2D.velocity.y);	
+		GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * moveSpeed, GetComponent<Rigidbody2D>().velocity.y);	
 
 		// If the enemy has one hit point left and has a damagedEnemy sprite...
 		if(HP == 1 && damagedEnemy != null)
@@ -86,8 +86,8 @@ public class Enemy : MonoBehaviour
 		dead = true;
 
 		// Allow the enemy to rotate and spin it by adding a torque.
-		rigidbody2D.fixedAngle = false;
-		rigidbody2D.AddTorque(Random.Range(deathSpinMin,deathSpinMax));
+		GetComponent<Rigidbody2D>().fixedAngle = false;
+		GetComponent<Rigidbody2D>().AddTorque(Random.Range(deathSpinMin,deathSpinMax));
 
 		// Find all of the colliders on the gameobject and set them all to be triggers.
 		Collider2D[] cols = GetComponents<Collider2D>();
