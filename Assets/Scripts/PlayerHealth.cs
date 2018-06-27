@@ -28,53 +28,61 @@ public class PlayerHealth : MonoBehaviour
 	}
 
 
-	void OnCollisionEnter2D (Collision2D col)
-	{
-		// If the colliding gameobject is an Enemy...
-		if(col.gameObject.tag == "Enemy")
-		{
-			// ... and if the time exceeds the time of the last hit plus the time between hits...
-			if (Time.time > lastHitTime + repeatDamagePeriod) 
-			{
-				// ... and if the player still has health...
-				if(health > 0f)
-				{
-					// ... take damage and reset the lastHitTime.
-					TakeDamage(col.transform); 
-					lastHitTime = Time.time; 
-				}
-				// If the player doesn't have health, do some stuff, let him fall into the river to reload the level.
-				else
-				{
-					// Find all of the colliders on the gameobject and set them all to be triggers.
-					Collider2D[] cols = GetComponents<Collider2D>();
-					foreach(Collider2D c in cols)
-					{
-						c.isTrigger = true;
-					}
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        // If the colliding gameobject is an Enemy...
+        if (col.gameObject.tag == "Enemy")
+        {
+            ApplyDamage(col.transform);
+        }
 
-					// Move all sprite parts of the player to the front
-					SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
-					foreach(SpriteRenderer s in spr)
-					{
-						s.sortingLayerName = "UI";
-					}
+    }
 
-					// ... disable user Player Control script
-					GetComponent<PlayerControl>().enabled = false;
+    public void ApplyDamage(Transform damageTransform)
+    {
+        {
+            // If the time exceeds the time of the last hit plus the time between hits...
+            if (Time.time > lastHitTime + repeatDamagePeriod)
+            {
+                // ... and if the player still has health...
+                if (health > 0f)
+                {
+                    // ... take damage and reset the lastHitTime.
+                    TakeDamage(damageTransform);
+                    lastHitTime = Time.time;
+                }
+                // If the player doesn't have health, do some stuff, let him fall into the river to reload the level.
+                else
+                {
+                    // Find all of the colliders on the gameobject and set them all to be triggers.
+                    Collider2D[] cols = GetComponents<Collider2D>();
+                    foreach (Collider2D c in cols)
+                    {
+                        c.isTrigger = true;
+                    }
 
-					// ... disable the Gun script to stop a dead guy shooting a nonexistant bazooka
-					GetComponentInChildren<Gun>().enabled = false;
+                    // Move all sprite parts of the player to the front
+                    SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+                    foreach (SpriteRenderer s in spr)
+                    {
+                        s.sortingLayerName = "UI";
+                    }
 
-					// ... Trigger the 'Die' animation state
-					anim.SetTrigger("Die");
-				}
-			}
-		}
-	}
+                    // ... disable user Player Control script
+                    GetComponent<PlayerControl>().enabled = false;
+
+                    // ... disable the Gun script to stop a dead guy shooting a nonexistant bazooka
+                    GetComponentInChildren<Gun>().enabled = false;
+
+                    // ... Trigger the 'Die' animation state
+                    anim.SetTrigger("Die");
+                }
+            }
+        }
+    }
 
 
-	void TakeDamage (Transform enemy)
+    void TakeDamage (Transform enemy)
 	{
 		// Make sure the player can't jump.
 		playerControl.jump = false;
@@ -83,7 +91,7 @@ public class PlayerHealth : MonoBehaviour
 		Vector3 hurtVector = transform.position - enemy.position + Vector3.up * 5f;
 
 		// Add a force to the player in the direction of the vector and multiply by the hurtForce.
-		rigidbody2D.AddForce(hurtVector * hurtForce);
+		GetComponent<Rigidbody2D>().AddForce(hurtVector * hurtForce);
 
 		// Reduce the player's health by 10.
 		health -= damageAmount;
