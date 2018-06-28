@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\SetParticleSortingLayer.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\StoryModeEnemy.cs" />
+    <Compile Include="Assets\Scripts\WinCondition.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Bergman/Documents/GitHub/unitydemo-2DPlatformer/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

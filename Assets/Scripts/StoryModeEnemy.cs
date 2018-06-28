@@ -4,9 +4,12 @@ using System.Collections;
 public class StoryModeEnemy : Enemy
 {
 
+    private WinCondition winCondition;
+
     void Awake()
     {
         // Setting up the references.
+        winCondition = GetComponentInParent<WinCondition>();
         ren = transform.Find("body").GetComponent<SpriteRenderer>();
         frontCheck = transform.Find("frontCheck").transform;
     }
@@ -44,6 +47,9 @@ public class StoryModeEnemy : Enemy
 
     private void Death()
     {
+        //Update wincondition script (checks if all enemies are defeated)
+        winCondition.RemoveEnemy();
+
         // Find all of the sprite renderers on this object and it's children.
         SpriteRenderer[] otherRenderers = GetComponentsInChildren<SpriteRenderer>();
 

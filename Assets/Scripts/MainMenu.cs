@@ -5,18 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
-	public void loadSurvival()
+	public void LoadSurvival()
     {
         SceneManager.LoadScene("Survival");
     }
 
-    public void loadStory()
+    public void LoadStory()
     {
         SceneManager.LoadScene("Story");
     }
 
-    public void loadMenu()
+    public void LoadMenu()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
