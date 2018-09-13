@@ -5,7 +5,7 @@ using System.Collections;
 public class Remover : MonoBehaviour
 {
 	public GameObject splash;
-
+    public string mainMenuName = "MainMenu";
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
@@ -29,8 +29,11 @@ public class Remover : MonoBehaviour
 			Instantiate(splash, col.transform.position, transform.rotation);
 			// ... destroy the player.
 			Destroy (col.gameObject);
-			// ... reload the level.
-			StartCoroutine("ReloadGame");
+            // ... reload the level.
+            //StartCoroutine("ReloadGame");
+
+            // Go back to the main menu
+            StartCoroutine(ReturnToMainMenu());
 		}
 		else
 		{
@@ -49,4 +52,10 @@ public class Remover : MonoBehaviour
 		// ... and then reload the level.
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
+
+    IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(mainMenuName);
+    }
 }
