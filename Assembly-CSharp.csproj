@@ -53,27 +53,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BackgroundParallax.cs" />
-     <Compile Include="Assets\Scripts\BackgroundPropSpawner.cs" />
-     <Compile Include="Assets\Scripts\Bomb.cs" />
-     <Compile Include="Assets\Scripts\BombPickup.cs" />
-     <Compile Include="Assets\Scripts\CameraFollow.cs" />
-     <Compile Include="Assets\Scripts\Destroyer.cs" />
-     <Compile Include="Assets\Scripts\Enemy.cs" />
-     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
-     <Compile Include="Assets\Scripts\Gun.cs" />
-     <Compile Include="Assets\Scripts\HealthPickup.cs" />
-     <Compile Include="Assets\Scripts\LayBombs.cs" />
-     <Compile Include="Assets\Scripts\Pauser.cs" />
-     <Compile Include="Assets\Scripts\PickupSpawner.cs" />
-     <Compile Include="Assets\Scripts\PlayerControl.cs" />
-     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
-     <Compile Include="Assets\Scripts\Remover.cs" />
-     <Compile Include="Assets\Scripts\Rocket.cs" />
-     <Compile Include="Assets\Scripts\Score.cs" />
-     <Compile Include="Assets\Scripts\ScoreShadow.cs" />
-     <Compile Include="Assets\Scripts\SetParticleSortingLayer.cs" />
-     <Compile Include="Assets\Scripts\Spawner.cs" />
+     <Compile Include="Assets\Scripts\Character\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Character\PlayerControl.cs" />
+     <Compile Include="Assets\Scripts\Character\PlayerHealth.cs" />
+     <Compile Include="Assets\Scripts\HUD\FollowPlayer.cs" />
+     <Compile Include="Assets\Scripts\HUD\Pauser.cs" />
+     <Compile Include="Assets\Scripts\HUD\Score.cs" />
+     <Compile Include="Assets\Scripts\HUD\ScoreShadow.cs" />
+     <Compile Include="Assets\Scripts\Inventory\BombPickup.cs" />
+     <Compile Include="Assets\Scripts\Inventory\HealthPickup.cs" />
+     <Compile Include="Assets\Scripts\Level\BackgroundParallax.cs" />
+     <Compile Include="Assets\Scripts\Level\BackgroundPropSpawner.cs" />
+     <Compile Include="Assets\Scripts\Level\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\Level\Destroyer.cs" />
+     <Compile Include="Assets\Scripts\Level\PickupSpawner.cs" />
+     <Compile Include="Assets\Scripts\Level\Remover.cs" />
+     <Compile Include="Assets\Scripts\Level\SetParticleSortingLayer.cs" />
+     <Compile Include="Assets\Scripts\Level\Spawner.cs" />
+     <Compile Include="Assets\Scripts\Weapon\Bomb.cs" />
+     <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
+     <Compile Include="Assets\Scripts\Weapon\LayBombs.cs" />
+     <Compile Include="Assets\Scripts\Weapon\Rocket.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>D:/projects/unitydemo-2DPlatformer/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
