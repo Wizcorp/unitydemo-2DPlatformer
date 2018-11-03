@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Actor;
 
-public class Enemy : MonoBehaviour
+public class Enemy : ActorBase
 {
+    public float damage = 10f;
 	public float moveSpeed = 2f;		// The speed the enemy moves at.
-	public int HP = 2;					// How many times the enemy can be hit before it dies.
 	public Sprite deadEnemy;			// A sprite of the enemy when it's dead.
 	public Sprite damagedEnemy;			// An optional sprite of the enemy when it's damaged.
 	public AudioClip[] deathClips;		// An array of audioclips that can play when the enemy dies.
@@ -12,20 +13,36 @@ public class Enemy : MonoBehaviour
 	public float deathSpinMin = -100f;			// A value to give the minimum amount of Torque when dying
 	public float deathSpinMax = 100f;			// A value to give the maximum amount of Torque when dying
 
+    public float pushForce = 10f;
 
 	private SpriteRenderer ren;			// Reference to the sprite renderer.
 	private Transform frontCheck;		// Reference to the position of the gameobject used for checking if something is in front.
-	private bool dead = false;			// Whether or not the enemy is dead.
 	private Score score;				// Reference to the Score script.
 
-	
-	void Awake()
+	protected override void Awake()
 	{
+        base.Awake();
+
 		// Setting up the references.
 		ren = transform.Find("body").GetComponent<SpriteRenderer>();
 		frontCheck = transform.Find("frontCheck").transform;
 		score = GameObject.Find("Score").GetComponent<Score>();
 	}
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            Vector3 knockUpForce = col.transform.position - transform.position + Vector3.up * 5f;
+
+            ActorEffect effect;
+            effect.type = ActorEffect.Type.Damage;
+            effect.amount = damage;
+            effect.forceVector = knockUpForce * pushForce;
+
+            col.gameObject.GetComponent<ActorBase>().ApplyEffect(effect);
+        }
+    }
 
 	void FixedUpdate ()
 	{
@@ -46,26 +63,27 @@ public class Enemy : MonoBehaviour
 
 		// Set the enemy's velocity to moveSpeed in the x direction.
 		GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * moveSpeed, GetComponent<Rigidbody2D>().velocity.y);	
+	}
 
-		// If the enemy has one hit point left and has a damagedEnemy sprite...
-		if(HP == 1 && damagedEnemy != null)
-			// ... set the sprite renderer's sprite to be the damagedEnemy sprite.
-			ren.sprite = damagedEnemy;
-			
-		// If the enemy has zero or fewer hit points and isn't dead yet...
-		if(HP <= 0 && !dead)
-			// ... call the death function.
-			Death ();
-	}
-	
-	public void Hurt()
+    protected override void OnDamageReceived(float amount)
+    {
+        bool wasDamaged = health < totalHealth;
+
+        base.OnDamageReceived(amount);
+
+        if (health > 0f && health < totalHealth)
+        {
+            if (damagedEnemy != null && !wasDamaged)
+            {
+                ren.sprite = damagedEnemy;
+            }
+        }
+    }
+
+    protected override void OnDied()
 	{
-		// Reduce the number of hit points by one.
-		HP--;
-	}
-	
-	void Death()
-	{
+        base.OnDied();
+
 		// Find all of the sprite renderers on this object and it's children.
 		SpriteRenderer[] otherRenderers = GetComponentsInChildren<SpriteRenderer>();
 
@@ -81,9 +99,6 @@ public class Enemy : MonoBehaviour
 
 		// Increase the score by 100 points
 		score.score += 100;
-
-		// Set dead to true.
-		dead = true;
 
 		// Allow the enemy to rotate and spin it by adding a torque.
 		GetComponent<Rigidbody2D>().fixedAngle = false;

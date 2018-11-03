@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using Actor;
+
 public class Bomb : MonoBehaviour
 {
 	public float bombRadius = 10f;			// Radius within which enemies are killed.
@@ -66,15 +68,19 @@ public class Bomb : MonoBehaviour
 			Rigidbody2D rb = en.GetComponent<Rigidbody2D>();
 			if(rb != null && rb.tag == "Enemy")
 			{
-				// Find the Enemy script and set the enemy's health to zero.
-				rb.gameObject.GetComponent<Enemy>().HP = 0;
+                // Find a vector from the bomb to the enemy.
+                Vector3 deltaPos = rb.transform.position - transform.position;
 
-				// Find a vector from the bomb to the enemy.
-				Vector3 deltaPos = rb.transform.position - transform.position;
+                // Apply a force in this direction with a magnitude of bombForce.
+                Vector3 force = deltaPos.normalized * bombForce;
 
-				// Apply a force in this direction with a magnitude of bombForce.
-				Vector3 force = deltaPos.normalized * bombForce;
-				rb.AddForce(force);
+                ActorEffect effect;
+                effect.type = ActorEffect.Type.Kill;
+                effect.amount = 0f;
+                effect.forceVector = force;
+
+                // Find the Enemy script and set the enemy's health to zero.
+                rb.gameObject.GetComponent<ActorBase>().ApplyEffect(effect);
 			}
 		}
 

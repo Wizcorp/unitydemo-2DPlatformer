@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Actor;
 
 public class Rocket : MonoBehaviour 
 {
-	public GameObject explosion;		// Prefab of explosion effect.
-
+    public float        damage = 1f;
+	public GameObject   explosion;
 
 	void Start () 
 	{
@@ -12,48 +13,22 @@ public class Rocket : MonoBehaviour
 		Destroy(gameObject, 2);
 	}
 
-
-	void OnExplode()
-	{
-		// Create a quaternion with a random rotation in the z-axis.
-		Quaternion randomRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
-
-		// Instantiate the explosion where the rocket is with the random rotation.
-		Instantiate(explosion, transform.position, randomRotation);
-	}
-	
 	void OnTriggerEnter2D (Collider2D col) 
 	{
-		// If it hits an enemy...
-		if(col.tag == "Enemy")
-		{
-			// ... find the Enemy script and call the Hurt function.
-			col.gameObject.GetComponent<Enemy>().Hurt();
+        Quaternion randomRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
+        Instantiate(explosion, transform.position, randomRotation);
 
-			// Call the explosion instantiation.
-			OnExplode();
+        ActorBase actor = col.gameObject.GetComponent<ActorBase>();
+        if (actor != null)
+        {
+            ActorEffect effect;
+            effect.type = ActorEffect.Type.Damage;
+            effect.amount = damage;
+            effect.forceVector = Vector2.zero;
 
-			// Destroy the rocket.
-			Destroy (gameObject);
-		}
-		// Otherwise if it hits a bomb crate...
-		else if(col.tag == "BombPickup")
-		{
-			// ... find the Bomb script and call the Explode function.
-			col.gameObject.GetComponent<Bomb>().Explode();
+            actor.ApplyEffect(effect);
+        }
 
-			// Destroy the bomb crate.
-			Destroy (col.transform.root.gameObject);
-
-			// Destroy the rocket.
-			Destroy (gameObject);
-		}
-		// Otherwise if the player manages to shoot himself...
-		else if(col.gameObject.tag != "Player")
-		{
-			// Instantiate the explosion and destroy the rocket.
-			OnExplode();
-			Destroy (gameObject);
-		}
-	}
+        Destroy(gameObject);
+    }
 }
