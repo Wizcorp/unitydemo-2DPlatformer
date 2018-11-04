@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Actor;
-
-public class Pickup : ActorBase
+public class Pickup : Actor
 {
     private Animator anim;                  // Reference to the animator component.
     private bool landed;					// Whether or not the crate has landed.

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using Actor;
-
 public class Bomb : MonoBehaviour
 {
 	public float bombRadius = 10f;			// Radius within which enemies are killed.
@@ -80,7 +78,7 @@ public class Bomb : MonoBehaviour
                 effect.forceVector = force;
 
                 // Find the Enemy script and set the enemy's health to zero.
-                rb.gameObject.GetComponent<ActorBase>().ApplyEffect(effect);
+                rb.gameObject.GetComponent<Actor>().ApplyEffect(effect);
 			}
 		}
 

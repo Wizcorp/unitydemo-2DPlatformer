@@ -19,25 +19,28 @@ public class LayBombs : MonoBehaviour
 		bombHUD = GameObject.Find("ui_bombHUD").GetComponent<GUITexture>();
 	}
 
+    public bool CanUseBomb()
+    {
+        return !bombLaid && bombCount > 0;
+    }
+
+    public void UseBomb()
+    {
+        // Decrement the number of bombs.
+        bombCount--;
+
+        // Set bombLaid to true.
+        bombLaid = true;
+
+        // Play the bomb laying sound.
+        AudioSource.PlayClipAtPoint(bombsAway, transform.position);
+
+        // Instantiate the bomb prefab.
+        Instantiate(bomb, transform.position, transform.rotation);
+    }
 
 	void Update ()
 	{
-		// If the bomb laying button is pressed, the bomb hasn't been laid and there's a bomb to lay...
-		if(Input.GetButtonDown("Fire2") && !bombLaid && bombCount > 0)
-		{
-			// Decrement the number of bombs.
-			bombCount--;
-
-			// Set bombLaid to true.
-			bombLaid = true;
-
-			// Play the bomb laying sound.
-			AudioSource.PlayClipAtPoint(bombsAway,transform.position);
-
-			// Instantiate the bomb prefab.
-			Instantiate(bomb, transform.position, transform.rotation);
-		}
-
 		// The bomb heads up display should be enabled if the player has bombs, other it should be disabled.
 		bombHUD.enabled = bombCount > 0;
 	}

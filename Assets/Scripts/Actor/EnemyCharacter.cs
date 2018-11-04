@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Actor;
 
-public class Enemy : ActorBase
+public class EnemyCharacter : Character
 {
     public float damage = 10f;
-	public float moveSpeed = 2f;		// The speed the enemy moves at.
 	public Sprite deadEnemy;			// A sprite of the enemy when it's dead.
 	public Sprite damagedEnemy;			// An optional sprite of the enemy when it's damaged.
 	public AudioClip[] deathClips;		// An array of audioclips that can play when the enemy dies.
@@ -16,7 +14,7 @@ public class Enemy : ActorBase
     public float pushForce = 10f;
 
 	private SpriteRenderer ren;			// Reference to the sprite renderer.
-	private Transform frontCheck;		// Reference to the position of the gameobject used for checking if something is in front.
+    private Animator anim;
 	private Score score;				// Reference to the Score script.
 
 	protected override void Awake()
@@ -25,7 +23,7 @@ public class Enemy : ActorBase
 
 		// Setting up the references.
 		ren = transform.Find("body").GetComponent<SpriteRenderer>();
-		frontCheck = transform.Find("frontCheck").transform;
+        anim = GetComponent<Animator>();
 		score = GameObject.Find("Score").GetComponent<Score>();
 	}
 
@@ -40,30 +38,16 @@ public class Enemy : ActorBase
             effect.amount = damage;
             effect.forceVector = knockUpForce * pushForce;
 
-            col.gameObject.GetComponent<ActorBase>().ApplyEffect(effect);
+            col.gameObject.GetComponent<Actor>().ApplyEffect(effect);
         }
     }
 
-	void FixedUpdate ()
-	{
-		// Create an array of all the colliders in front of the enemy.
-		Collider2D[] frontHits = Physics2D.OverlapPointAll(frontCheck.position, 1);
-
-		// Check each of the colliders.
-		foreach(Collider2D c in frontHits)
-		{
-			// If any of the colliders is an Obstacle...
-			if(c.tag == "Obstacle")
-			{
-				// ... Flip the enemy and stop checking the other colliders.
-				Flip ();
-				break;
-			}
-		}
-
-		// Set the enemy's velocity to moveSpeed in the x direction.
-		GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x * moveSpeed, GetComponent<Rigidbody2D>().velocity.y);	
-	}
+    public override void Move(float moveVector)
+    {
+        base.Move(moveVector);
+        float v = GetComponent<Rigidbody2D>().velocity.x;
+        anim.SetFloat("Speed", Mathf.Abs(v));
+    }
 
     protected override void OnDamageReceived(float amount)
     {
@@ -122,14 +106,5 @@ public class Enemy : ActorBase
 
 		// Instantiate the 100 points prefab at this point.
 		Instantiate(hundredPointsUI, scorePos, Quaternion.identity);
-	}
-
-
-	public void Flip()
-	{
-		// Multiply the x component of localScale by -1.
-		Vector3 enemyScale = transform.localScale;
-		enemyScale.x *= -1;
-		transform.localScale = enemyScale;
 	}
 }

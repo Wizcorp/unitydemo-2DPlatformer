@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Actor;
 
 public class Rocket : MonoBehaviour 
 {
@@ -15,10 +14,13 @@ public class Rocket : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D col) 
 	{
+        if (col.tag == "Player")
+            return;
+
         Quaternion randomRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
         Instantiate(explosion, transform.position, randomRotation);
 
-        ActorBase actor = col.gameObject.GetComponent<ActorBase>();
+        Actor actor = col.gameObject.GetComponent<Actor>();
         if (actor != null)
         {
             ActorEffect effect;

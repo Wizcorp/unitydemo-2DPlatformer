@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 11400000}
   - component: {fileID: 5800000}
   - component: {fileID: 9500000}
+  - component: {fileID: 114428781991631952}
   m_Layer: 10
   m_Name: enemy2
   m_TagString: Enemy
@@ -156,10 +157,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalHealth: 2
+  indestructable: 0
   isDead: 0
   health: 0
+  jumpForce: 1000
+  moveForce: 365
+  maxSpeed: 5
   damage: 10
-  moveSpeed: 5
   deadEnemy: {fileID: 21300000, guid: 73fa5f80d4ddd4196b767cc01c1b5c68, type: 3}
   damagedEnemy: {fileID: 21300000, guid: bc16422a503ec43cab4ad9ddab02ff7a, type: 3}
   deathClips:
@@ -227,3 +231,14 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100006}
   m_IsPrefabAsset: 1
+--- !u!114 &114428781991631952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206e90234595d8843b090c35a41bc8d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using Actor;
-
 public class HealthPickup : Pickup
 {
 	public float healthBonus;				// How much health the crate gives the player.
@@ -27,7 +25,7 @@ public class HealthPickup : Pickup
         effect.amount = healthBonus;
         effect.forceVector = Vector2.zero;
 
-        gameObject.GetComponent<ActorBase>().ApplyEffect(effect);
+        gameObject.GetComponent<Actor>().ApplyEffect(effect);
 
         // Trigger a new delivery.
         pickupSpawner.StartCoroutine(pickupSpawner.DeliverPickup());
