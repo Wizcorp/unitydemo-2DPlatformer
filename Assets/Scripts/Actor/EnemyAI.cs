@@ -29,6 +29,7 @@ public class EnemyAI : MonoBehaviour
                     // ... Flip the enemy and stop checking the other colliders.
                     Vector2 dir = character.GetOrientation();
                     dir.x *= -1f;
+                    dir.y = 0f;
                     character.SetOrientation(dir);
                     break;
                 }

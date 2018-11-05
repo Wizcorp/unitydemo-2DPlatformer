@@ -9,12 +9,19 @@ public class Character : Actor
     public float    moveForce = 365f;          // Amount of force added to move the player left and right.
     public float    maxSpeed = 5f;				// The fastest the player can travel in the x axis.
 
+    private const float maxAltitude = 14f;
+
+    public float    hoverAltitude = 10f;
+    public float    hoverForce = 15f;
+    public float    maxHoverSpeed = 3f;
+
     private Vector2 orientation = Vector2.right;
 
     private bool    isOnGround = false;
     private bool    isJumping = false;
+    private bool    isHovering = false;
 
-    private Vector2 movement = Vector2.zero;
+    private float   movement = 0f;
     private bool    inFixedUpdate = false;
 
     private LayBombs layBombs; //temporary
@@ -35,8 +42,11 @@ public class Character : Actor
             if (isJumping && isOnGround)
                 isJumping = false;
 
-            if (Mathf.Abs(movement.x) > Mathf.Epsilon)
+            if (Mathf.Abs(movement) > Mathf.Epsilon)
                 DoMove();
+
+            if (isHovering)
+                DoHover();
         }
     }
 
@@ -68,6 +78,55 @@ public class Character : Actor
 
     public Vector2 GetOrientation() { return orientation; }
 
+
+    public bool CanHover()
+    {
+        return isAlive;
+    }
+
+    public virtual void SetHovering(bool hovering)
+    {
+        Debug.Assert(CanHover());
+
+        bool wasHovering = isHovering;
+        isHovering = hovering;
+
+        if (isHovering && !wasHovering && inFixedUpdate)
+            DoHover();
+    }
+
+    public bool IsHovering() { return isHovering; }
+
+    void DoHover()
+    {
+        Rigidbody2D body = GetComponent<Rigidbody2D>();
+
+        Vector2 antigravity = -Physics2D.gravity * body.mass;
+        Vector2 velocity = body.velocity;
+
+        body.AddForce(antigravity * 0.85f);
+
+        if (transform.position.y < hoverAltitude)
+        {
+            float distance = Mathf.Abs(hoverAltitude - transform.position.y);
+            float distanceFactor = Mathf.Min(distance, 1f);
+            body.AddForce(Vector2.up * hoverForce * distanceFactor);
+        }
+
+        if (Mathf.Abs(velocity.y) > maxHoverSpeed)
+        {
+            velocity.y = Mathf.Sign(velocity.y) * maxHoverSpeed;
+            body.velocity = velocity;
+        }
+
+        if (transform.position.y > maxAltitude)
+        {
+            transform.position = new Vector2(transform.position.x, maxAltitude);
+            velocity.y = 0f;
+            body.velocity = velocity;
+        }
+    }
+
     public bool CanMove()
     {
         return isAlive;
@@ -76,7 +135,7 @@ public class Character : Actor
     public virtual void Move(float moveVector)
     {
         Debug.Assert(CanMove());
-        movement = new Vector2(moveVector, 0f);
+        movement = moveVector;
 
         if (inFixedUpdate)
             DoMove();
@@ -87,15 +146,12 @@ public class Character : Actor
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         Vector2 velocity = body.velocity;
 
-        float moveDir = movement.x;
-
-        if (Mathf.Abs(moveDir) > Mathf.Epsilon )
+        if (Mathf.Abs(movement) > Mathf.Epsilon )
         {
-            float velocityInDirection = moveDir * velocity.x;
-
+            float velocityInDirection = movement * velocity.x;
             if (velocityInDirection < maxSpeed)
             {
-                body.AddForce(Vector2.right * moveDir * moveForce);
+                body.AddForce(Vector2.right * movement * moveForce);
             }
         }
 
@@ -103,13 +159,11 @@ public class Character : Actor
         {
             body.velocity = new Vector2(Mathf.Sign(velocity.x) * maxSpeed, velocity.y);
         }
-
-        movement = Vector2.zero;
     }
 
     public bool CanJump()
     {
-        return isAlive && isOnGround && !isJumping;
+        return isAlive && isOnGround && !isJumping && !isHovering;
     }
 
     public virtual void Jump(Vector2 direction)
