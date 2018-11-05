@@ -24,12 +24,15 @@ public class Character : Actor
     private float   movement = 0f;
     private bool    inFixedUpdate = false;
 
+    private RangedWeapon rangedWeapon;
+
     private LayBombs layBombs; //temporary
 
     protected override void Awake()
     {
         base.Awake();
         layBombs = GetComponentInChildren<LayBombs>();
+        rangedWeapon = GetComponentInChildren<RangedWeapon>();
     }
 	
 	protected virtual void FixedUpdate ()
@@ -176,14 +179,14 @@ public class Character : Actor
 
     public bool CanShoot()
     {
-        return isAlive;
+        return isAlive && rangedWeapon != null;
     }
 
     public virtual void Shoot(Vector2 direction)
     {
         Debug.Assert(CanShoot());
 
-        GetComponentInChildren<Gun>().Fire(direction);
+        rangedWeapon.Fire(direction, gameObject.tag);
     }
 
     public bool CanUseBomb()

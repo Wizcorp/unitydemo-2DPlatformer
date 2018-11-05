@@ -1,30 +1,104 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour
 {
+    [System.Serializable]
+    public class SpawnType
+    {
+        public GameObject   character;
+        public int          maxInstances;
+
+        [HideInInspector]
+        public List<GameObject> instances;
+    }
+
 	public float spawnTime = 5f;		// The amount of time between each spawn.
-	public float spawnDelay = 3f;		// The amount of time before spawning starts.
-	public GameObject[] enemies;		// Array of enemy prefabs.
+    public float minSpawnInterval = 2f;
+    public float maxSpawnInterval = 5f;
 
+    public SpawnType[] spawnTypes;
 
-	void Start ()
+    void Awake()
+    {
+        StartCoroutine(SpawnLoop());
+    }
+
+    IEnumerator SpawnLoop()
+    {
+        yield return new WaitForSeconds(spawnTime);
+        while(true)
+        {
+            Spawn();
+            float waitTime = Random.Range(minSpawnInterval, maxSpawnInterval);
+            yield return new WaitForSeconds(waitTime);
+        }
+    }
+
+    int GetSpawnInstanceNullSlot(SpawnType spawnType)
+    {
+        for (int i = 0; i < spawnType.maxInstances; ++i)
+        {
+            if (spawnType.instances[i] == null)
+                return i;
+        }
+        return -1;
+    }
+
+    bool CanSpawn(SpawnType spawnType)
+    {
+        if (spawnType.instances.Count < spawnType.maxInstances)
+            return true;
+
+        if (GetSpawnInstanceNullSlot(spawnType) >= 0)
+            return true;
+
+        return false;
+    }
+
+    void Spawn(SpawnType spawnType)
+    {
+        GameObject go = Instantiate(spawnType.character, transform.position, transform.rotation);
+
+        if (spawnType.instances.Count < spawnType.maxInstances)
+        {
+            spawnType.instances.Add(go);
+        }
+        else
+        {
+            int slot = GetSpawnInstanceNullSlot(spawnType);
+            spawnType.instances[slot] = go;
+        }
+
+        // Play the spawning effect from all of the particle systems.
+        foreach (ParticleSystem p in GetComponentsInChildren<ParticleSystem>())
+        {
+            p.Play();
+        }
+    }
+
+    void Spawn ()
 	{
-		// Start calling the Spawn function repeatedly after a delay .
-		InvokeRepeating("Spawn", spawnDelay, spawnTime);
-	}
+        if (spawnTypes.Length == 0)
+            return;
 
+        int startIndex = Random.Range(0, spawnTypes.Length);
+        int typeIndex = startIndex;
 
-	void Spawn ()
-	{
-		// Instantiate a random enemy.
-		int enemyIndex = Random.Range(0, enemies.Length);
-		Instantiate(enemies[enemyIndex], transform.position, transform.rotation);
+        while (!CanSpawn(spawnTypes[typeIndex])) 
+        {
+            typeIndex = (typeIndex + 1) % spawnTypes.Length;
+            if (typeIndex == startIndex)
+            {
+                typeIndex = -1;
+                break;
+            }
+        }
 
-		// Play the spawning effect from all of the particle systems.
-		foreach(ParticleSystem p in GetComponentsInChildren<ParticleSystem>())
-		{
-			p.Play();
-		}
+        if (typeIndex == -1)
+            return;
+
+        Spawn(spawnTypes[typeIndex]);
 	}
 }

@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Actor\Character.cs" />
      <Compile Include="Assets\Scripts\Actor\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\Actor\EnemyCharacter.cs" />
+     <Compile Include="Assets\Scripts\Actor\FlyingEnemyAI.cs" />
      <Compile Include="Assets\Scripts\Actor\HealthPickup.cs" />
      <Compile Include="Assets\Scripts\Actor\Pickup.cs" />
      <Compile Include="Assets\Scripts\Actor\PlayerCharacter.cs" />
@@ -76,8 +77,9 @@
      <Compile Include="Assets\Scripts\Level\SetParticleSortingLayer.cs" />
      <Compile Include="Assets\Scripts\Level\Spawner.cs" />
      <Compile Include="Assets\Scripts\Weapon\Bomb.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
      <Compile Include="Assets\Scripts\Weapon\LayBombs.cs" />
+     <Compile Include="Assets\Scripts\Weapon\Projectile.cs" />
+     <Compile Include="Assets\Scripts\Weapon\RangedWeapon.cs" />
      <Compile Include="Assets\Scripts\Weapon\Rocket.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>D:/projects/unitydemo-2DPlatformer/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

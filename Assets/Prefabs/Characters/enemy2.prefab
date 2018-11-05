@@ -43,7 +43,8 @@ GameObject:
   - component: {fileID: 11400000}
   - component: {fileID: 5800000}
   - component: {fileID: 9500000}
-  - component: {fileID: 114428781991631952}
+  - component: {fileID: 114199367968969396}
+  - component: {fileID: 114228823511328102}
   m_Layer: 10
   m_Name: enemy2
   m_TagString: Enemy
@@ -234,7 +235,7 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100006}
   m_IsPrefabAsset: 1
---- !u!114 &114428781991631952
+--- !u!114 &114199367968969396
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,6 +243,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 100006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 206e90234595d8843b090c35a41bc8d4, type: 3}
+  m_Script: {fileID: 11500000, guid: c650e861011ddd049bbfe1f48d806196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialAltitude: 9
+--- !u!114 &114228823511328102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d3d230faa650534ab7f23bb705cba53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireSound: {fileID: 0}
+  projectile: {fileID: 50461346925723532, guid: f1c6bbdbf10a44f4fafa24c68d5a6cc5,
+    type: 2}

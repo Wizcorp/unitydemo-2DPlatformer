@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerCharacter : Character
 {	
-	public float repeatDamagePeriod = 2f;		// How frequently the player can be damaged.
 	public AudioClip[] ouchClips;               // Array of clips to play when the player is damaged.
     public AudioClip[] jumpClips;           // Array of clips for when the player jumps.
     public float hurtForce = 10f;				// The force with which the player is pushed when hurt.
