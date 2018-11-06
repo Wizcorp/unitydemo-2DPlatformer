@@ -27,6 +27,12 @@ public class EnemyCharacter : Character
 		score = GameObject.Find("Score").GetComponent<Score>();
 	}
 
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        transform.localRotation = Quaternion.FromToRotation(Vector2.up, GetGroundNormal());
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Player")

@@ -30,7 +30,9 @@ public class Actor : MonoBehaviour
     {
         if (actorEffect.forceVector != Vector2.zero)
         {
-            GetComponent<Rigidbody2D>().AddForce(actorEffect.forceVector);
+            Rigidbody2D body = GetComponent<Rigidbody2D>();
+            if (body)
+                body.AddForce(actorEffect.forceVector);
         }
 
         if (isDead)

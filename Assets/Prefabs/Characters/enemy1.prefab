@@ -278,7 +278,10 @@ MonoBehaviour:
   health: 0
   jumpForce: 1000
   moveForce: 365
-  maxSpeed: 6
+  maxSpeed: 5
+  hoverAltitude: 10
+  hoverForce: 15
+  maxHoverSpeed: 3
   damage: 10
   deadEnemy: {fileID: 21300000, guid: bd1989b4e42a0454097f657dfb368bd8, type: 3}
   damagedEnemy: {fileID: 0}

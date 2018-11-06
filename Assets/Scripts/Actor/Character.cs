@@ -21,6 +21,8 @@ public class Character : Actor
     private bool    isJumping = false;
     private bool    isHovering = false;
 
+    private Vector2 groundNormal;
+
     private float   movement = 0f;
     private bool    inFixedUpdate = false;
 
@@ -40,7 +42,7 @@ public class Character : Actor
         inFixedUpdate = true;
         if (isAlive)
         {
-            isOnGround = CheckOnGround();
+            UpdateGround();
 
             if (isJumping && isOnGround)
                 isJumping = false;
@@ -58,11 +60,21 @@ public class Character : Actor
         inFixedUpdate = false;
     }
 
-    bool CheckOnGround()
+    protected Vector2 GetGroundNormal()
+    {
+        return groundNormal;
+    }
+
+    void UpdateGround()
     {
         Vector3 startPos = transform.position + Vector3.up * 0.5f;
         Vector3 endPos = startPos + Vector3.down * 2.0f;
-        return Physics2D.Linecast(startPos, endPos, 1 << LayerMask.NameToLayer("Ground"));
+        RaycastHit2D hit = Physics2D.Linecast(startPos, endPos, 1 << LayerMask.NameToLayer("Ground"));
+        isOnGround = hit;
+        if (hit)
+            groundNormal = hit.normal;
+        else
+            groundNormal = Vector2.up;
     }
 
     public bool CanChangeOrientation()
