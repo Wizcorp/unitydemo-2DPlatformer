@@ -17,7 +17,6 @@ public class PlayerCharacter : Character
 	private Vector3 healthScale;				// The local scale of the health bar initially (with full health).
 	private Animator anim;						// Reference to the Animator on the player
 
-
 	protected override void Awake ()
 	{
         base.Awake();
@@ -29,6 +28,24 @@ public class PlayerCharacter : Character
 		// Getting the intial scale of the healthbar (whilst the player has full health).
 		healthScale = healthBar.transform.localScale;
 	}
+
+    public override void SetOrientation(Vector2 direction)
+    {
+        base.SetOrientation(direction);
+
+        // Limit the rotation of the weapon to the range from 45 degrees down to 45 degrees up
+        RangedWeapon rangedWeapon = GetRangedWeapon();
+        if (rangedWeapon)
+        {
+            // TODO: This is a bit unreadable
+            Vector2 dir = new Vector2(Mathf.Abs(direction.x), Mathf.Abs(direction.y));
+            if (dir.x < dir.y)              // if it is above 45 degrees
+                dir.x = dir.y = 0.7071f;    // set 'dir' to Normalized(1,1)
+
+            dir.y *= Mathf.Sign(direction.y);
+            rangedWeapon.transform.localRotation = Quaternion.FromToRotation(Vector2.right, dir);
+        }
+    }
 
     public override void Move(float moveVector)
     {

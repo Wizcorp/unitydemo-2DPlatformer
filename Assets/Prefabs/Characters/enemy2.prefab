@@ -247,6 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialAltitude: 9
+  minAttackInterval: 1
+  maxAttackInterval: 3
 --- !u!114 &114228823511328102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -261,3 +263,5 @@ MonoBehaviour:
   fireSound: {fileID: 0}
   projectile: {fileID: 50461346925723532, guid: f1c6bbdbf10a44f4fafa24c68d5a6cc5,
     type: 2}
+  reloadTime: 1
+  shooterTag: 

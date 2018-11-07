@@ -35,6 +35,13 @@ public class Character : Actor
         base.Awake();
         layBombs = GetComponentInChildren<LayBombs>();
         rangedWeapon = GetComponentInChildren<RangedWeapon>();
+        if (rangedWeapon)
+            rangedWeapon.shooterTag = gameObject.tag;
+    }
+
+    protected RangedWeapon GetRangedWeapon()
+    {
+        return rangedWeapon;
     }
 	
 	protected virtual void FixedUpdate ()
@@ -140,6 +147,15 @@ public class Character : Actor
             velocity.y = 0f;
             body.velocity = velocity;
         }
+
+        // If linear drag is zero, this causes the character to stop in the air
+        // after half a second if there is no other force applied
+        if (Mathf.Abs(velocity.x) > 0f && body.drag == 0f)
+        {
+            float timeToStop = 0.5f;
+            float stopForce = body.mass * Mathf.Abs(velocity.x) / timeToStop;
+            body.AddForce(Vector2.left * Mathf.Sign(velocity.x) * stopForce);
+        }
     }
 
     public bool CanMove()
@@ -174,6 +190,8 @@ public class Character : Actor
         {
             body.velocity = new Vector2(Mathf.Sign(velocity.x) * maxSpeed, velocity.y);
         }
+
+        movement = 0f;
     }
 
     public bool CanJump()
@@ -186,19 +204,19 @@ public class Character : Actor
         Debug.Assert(CanJump());
 
         isJumping = true;
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
+        GetComponent<Rigidbody2D>().AddForce(direction * jumpForce);
     }
 
     public bool CanShoot()
     {
-        return isAlive && rangedWeapon != null;
+        return isAlive && rangedWeapon != null && rangedWeapon.CanFire();
     }
 
     public virtual void Shoot(Vector2 direction)
     {
         Debug.Assert(CanShoot());
 
-        rangedWeapon.Fire(direction, gameObject.tag);
+        rangedWeapon.Fire(direction);
     }
 
     public bool CanUseBomb()

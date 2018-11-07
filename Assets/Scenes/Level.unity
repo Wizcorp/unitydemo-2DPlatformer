@@ -1009,48 +1009,8 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
       propertyPath: m_RootOrder
       value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: maxLiftVelocity
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: liftForce
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
-      propertyPath: indestructable
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}

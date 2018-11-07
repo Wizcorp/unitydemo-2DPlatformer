@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
         if (character.CanShoot() && Input.GetButtonDown("Fire1"))
         {
-            character.Shoot(GetAimDirection());
+            character.Shoot(character.GetOrientation());
         }
 
         if (character.CanUseBomb() && Input.GetButtonDown("Fire2"))

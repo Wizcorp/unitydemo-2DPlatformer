@@ -6,6 +6,9 @@ public class FlyingEnemyAI : MonoBehaviour
 {
     public float        initialAltitude = 10f;
 
+    public float        minAttackInterval = 0.5f;
+    public float        maxAttackInterval = 1.5f;
+
     private Transform   frontCheck;		// Reference to the position of the gameobject used for checking if something is in front.
     private Character   character;
 
@@ -34,8 +37,9 @@ public class FlyingEnemyAI : MonoBehaviour
             if (player != null && character.CanShoot())
             {
                 character.Shoot(Aim());
+                yield return new WaitForSeconds(Random.Range(minAttackInterval, maxAttackInterval));
             }
-            yield return new WaitForSeconds(Random.Range(1.5f, 2.0f));
+            yield return null;
         }
     }
 
