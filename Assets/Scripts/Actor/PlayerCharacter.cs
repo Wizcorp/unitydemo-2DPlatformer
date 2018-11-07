@@ -5,8 +5,6 @@ public class PlayerCharacter : Character
 {	
 	public AudioClip[] ouchClips;               // Array of clips to play when the player is damaged.
     public AudioClip[] jumpClips;           // Array of clips for when the player jumps.
-    public float hurtForce = 10f;				// The force with which the player is pushed when hurt.
-	public float damageAmount = 10f;            // The amount of damage to take when enemies touch the player
 
     public AudioClip[] taunts;              // Array of clips for when the player taunts.
     public float tauntProbability = 50f;    // Chance of a taunt happening.

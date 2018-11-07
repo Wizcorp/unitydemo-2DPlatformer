@@ -61,6 +61,9 @@ public class Spawner : MonoBehaviour
     {
         GameObject go = Instantiate(spawnType.character, transform.position, transform.rotation);
 
+        Vector2 initialOrientation = new Vector2(transform.localScale.x, 0f);
+        go.GetComponent<Character>().SetOrientation(initialOrientation);
+
         if (spawnType.instances.Count < spawnType.maxInstances)
         {
             spawnType.instances.Add(go);

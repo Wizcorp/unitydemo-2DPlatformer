@@ -23,7 +23,7 @@ public class Score : MonoBehaviour
 		GetComponent<GUIText>().text = "Score: " + score;
 
 		// If the score has changed...
-		if(previousScore != score)
+		if(previousScore != score && playerCharacter != null)
             // ... play a taunt.
             playerCharacter.StartCoroutine(playerCharacter.Taunt());
 
