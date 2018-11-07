@@ -6,6 +6,7 @@ public class Pickup : Actor
 {
     private Animator anim;                  // Reference to the animator component.
     private bool landed;					// Whether or not the crate has landed.
+    private bool picked = false;
 
     protected override void Awake()
     {
@@ -21,6 +22,9 @@ public class Pickup : Actor
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (picked)
+            return;
+
         // If the player enters the trigger zone...
         if (other.tag == "Player")
         {
@@ -28,6 +32,7 @@ public class Pickup : Actor
 
             // Destroy the crate.
             Destroy(transform.root.gameObject);
+            picked = true;
         }
         // Otherwise if the crate hits the ground...
         else if (other.tag == "ground" && !landed)
