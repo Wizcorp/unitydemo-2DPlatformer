@@ -129,11 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b461c67a1aa2a49b5a87793a6aa18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  propParent: {fileID: 0}
   backgroundProp: {fileID: 5000000, guid: f9d0b7dac836a450f8040b62eb6ebd5f, type: 2}
   leftSpawnPosX: -24
   rightSpawnPosX: 24
-  minSpawnPosY: -5.5
-  maxSpawnPosY: -5.5
+  minSpawnPosY: -7.5
+  maxSpawnPosY: -7.5
   minTimeBetweenSpawns: 8
   maxTimeBetweenSpawns: 18
   minSpeed: 5
@@ -149,11 +150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b461c67a1aa2a49b5a87793a6aa18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  propParent: {fileID: 0}
   backgroundProp: {fileID: 5000000, guid: e22b0975178e44f1881534434127b177, type: 2}
   leftSpawnPosX: -24
   rightSpawnPosX: 24
-  minSpawnPosY: -6.4
-  maxSpawnPosY: -6.4
+  minSpawnPosY: -8.4
+  maxSpawnPosY: -8.4
   minTimeBetweenSpawns: 10
   maxTimeBetweenSpawns: 15
   minSpeed: 5
@@ -169,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b461c67a1aa2a49b5a87793a6aa18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  propParent: {fileID: 0}
   backgroundProp: {fileID: 5000000, guid: cccb6fdca5fce44bc94bacf40fa493e8, type: 2}
   leftSpawnPosX: -24
   rightSpawnPosX: 24

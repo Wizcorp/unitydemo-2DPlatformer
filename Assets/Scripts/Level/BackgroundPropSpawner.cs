@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BackgroundPropSpawner : MonoBehaviour
 {
+    public Transform propParent;
 	public Rigidbody2D backgroundProp;		// The prop to be instantiated.
 	public float leftSpawnPosX;				// The x coordinate of position if it's instantiated on the left.
 	public float rightSpawnPosX;			// The x coordinate of position if it's instantiated on the right.
@@ -44,7 +45,8 @@ public class BackgroundPropSpawner : MonoBehaviour
 		Vector3 spawnPos = new Vector3(posX, posY, transform.position.z);
 
 		// Instantiate the prop at the desired position.
-		Rigidbody2D propInstance = Instantiate(backgroundProp, spawnPos, Quaternion.identity) as Rigidbody2D;
+		Rigidbody2D propInstance = Instantiate(backgroundProp, propParent) as Rigidbody2D;
+        propInstance.transform.localPosition = spawnPos;
 
 		// The sprites for the props all face left.  Therefore, if the prop should be facing right...
 		if(!facingLeft)

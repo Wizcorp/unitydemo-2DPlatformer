@@ -22,17 +22,20 @@ public class Pickup : Actor
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (picked)
+        if (picked || isDead)
             return;
 
         // If the player enters the trigger zone...
         if (other.tag == "Player")
         {
-            OnPickedUp(other.gameObject);
+            if (other.gameObject.GetComponent<Actor>().isAlive)
+            {
+                OnPickedUp(other.gameObject);
 
-            // Destroy the crate.
-            Destroy(transform.root.gameObject);
-            picked = true;
+                // Destroy the crate.
+                Destroy(transform.root.gameObject);
+                picked = true;
+            }
         }
         // Otherwise if the crate hits the ground...
         else if (other.tag == "ground" && !landed)

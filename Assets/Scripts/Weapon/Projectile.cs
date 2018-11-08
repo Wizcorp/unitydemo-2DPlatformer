@@ -10,6 +10,8 @@ public class Projectile : MonoBehaviour
     [HideInInspector]
     public string shooterTag;
 
+    private bool projectileHit = false;
+
     protected virtual void FixedUpdate()
     {
         if (Mathf.Abs(transform.position.y) > 20)
@@ -18,8 +20,10 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == shooterTag || col.tag == "Bullet")
+        if (col.tag == shooterTag || col.tag == "Bullet" || projectileHit)
             return;
+
+        projectileHit = true;
 
         Actor actor = col.gameObject.GetComponent<Actor>();
         if (actor != null)

@@ -283,6 +283,7 @@ MonoBehaviour:
   hoverForce: 15
   maxHoverSpeed: 3
   damage: 10
+  minDamageInterval: 0.2
   deadEnemy: {fileID: 21300000, guid: bd1989b4e42a0454097f657dfb368bd8, type: 3}
   damagedEnemy: {fileID: 0}
   deathClips:
@@ -292,7 +293,7 @@ MonoBehaviour:
   hundredPointsUI: {fileID: 100006, guid: 31974361bc9e44fb18c77b64a4cb3bbd, type: 2}
   deathSpinMin: -100
   deathSpinMax: 100
-  pushForce: 20
+  pushForce: 60
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
