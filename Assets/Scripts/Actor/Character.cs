@@ -26,22 +26,29 @@ public class Character : Actor
     private float   movement = 0f;
     private bool    inFixedUpdate = false;
 
-    private RangedWeapon rangedWeapon;
-
-    private LayBombs layBombs; //temporary
+    private RangedWeapon    rangedWeapon;
+    private BombContainer   bombContainer;
+    private GameObject      activeBomb;
 
     protected override void Awake()
     {
         base.Awake();
-        layBombs = GetComponentInChildren<LayBombs>();
+
         rangedWeapon = GetComponentInChildren<RangedWeapon>();
         if (rangedWeapon)
             rangedWeapon.shooterTag = gameObject.tag;
+
+        bombContainer = GetComponentInChildren<BombContainer>();
     }
 
     protected RangedWeapon GetRangedWeapon()
     {
         return rangedWeapon;
+    }
+
+    protected BombContainer GetBombContainer()
+    {
+        return bombContainer;
     }
 	
 	protected virtual void FixedUpdate ()
@@ -221,11 +228,13 @@ public class Character : Actor
 
     public bool CanUseBomb()
     {
-        return isAlive && layBombs.CanUseBomb();
+        return isAlive && bombContainer && bombContainer.HasBombs() && !activeBomb;
     }
 
     public virtual void UseBomb()
     {
-        layBombs.UseBomb();
+        Debug.Assert(CanUseBomb());
+
+        activeBomb = bombContainer.TakeBomb(transform.position);
     }
 }

@@ -10,19 +10,16 @@ public class Bomb : MonoBehaviour
 	public float fuseTime = 1.5f;
 	public GameObject explosion;			// Prefab of explosion effect.
 
-
-	private LayBombs layBombs;				// Reference to the player's LayBombs script.
 	private PickupSpawner pickupSpawner;	// Reference to the PickupSpawner script.
 	private ParticleSystem explosionFX;		// Reference to the particle system of the explosion effect.
 
+    private bool exploded = false;
 
 	void Awake ()
 	{
 		// Setting up references.
 		explosionFX = GameObject.FindGameObjectWithTag("ExplosionFX").GetComponent<ParticleSystem>();
 		pickupSpawner = GameObject.Find("pickupManager").GetComponent<PickupSpawner>();
-		if(GameObject.FindGameObjectWithTag("Player"))
-			layBombs = GameObject.FindGameObjectWithTag("Player").GetComponent<LayBombs>();
 	}
 
 	void Start ()
@@ -46,13 +43,19 @@ public class Bomb : MonoBehaviour
 		Explode();
 	}
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Enemy" && !exploded)
+            Explode();
+    }
 
 	public void Explode()
 	{
-		
-		// The player is now free to lay bombs when he has them.
-		layBombs.bombLaid = false;
+        if (exploded)
+            return;
 
+        exploded = true;
+		
 		// Make the pickup spawner start to deliver a new pickup.
 		pickupSpawner.StartCoroutine(pickupSpawner.DeliverPickup());
 

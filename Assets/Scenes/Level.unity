@@ -1029,6 +1029,10 @@ Prefab:
       propertyPath: totalHealth
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
+      propertyPath: bombCount
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
   m_IsPrefabAsset: 0

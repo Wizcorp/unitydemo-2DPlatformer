@@ -183,11 +183,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalHealth: 1
-  indestructable: 1
+  indestructable: 0
   isDead: 0
   health: 0
+  pickupClip: {fileID: 8300000, guid: fdcf63a3454d74ea5bdd46db131f3078, type: 3}
   healthBonus: 25
-  collect: {fileID: 8300000, guid: fdcf63a3454d74ea5bdd46db131f3078, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

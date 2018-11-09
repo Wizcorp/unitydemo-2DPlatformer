@@ -55,15 +55,13 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actor\Actor.cs" />
      <Compile Include="Assets\Scripts\Actor\ActorEffect.cs" />
-     <Compile Include="Assets\Scripts\Actor\BombPickup.cs" />
      <Compile Include="Assets\Scripts\Actor\Character.cs" />
-     <Compile Include="Assets\Scripts\Actor\EnemyAI.cs" />
+     <Compile Include="Assets\Scripts\Actor\Controller\EnemyAI.cs" />
+     <Compile Include="Assets\Scripts\Actor\Controller\FlyingEnemyAI.cs" />
+     <Compile Include="Assets\Scripts\Actor\Controller\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Actor\EnemyCharacter.cs" />
-     <Compile Include="Assets\Scripts\Actor\FlyingEnemyAI.cs" />
-     <Compile Include="Assets\Scripts\Actor\HealthPickup.cs" />
      <Compile Include="Assets\Scripts\Actor\Pickup.cs" />
      <Compile Include="Assets\Scripts\Actor\PlayerCharacter.cs" />
-     <Compile Include="Assets\Scripts\Actor\PlayerController.cs" />
      <Compile Include="Assets\Scripts\HUD\FollowPlayer.cs" />
      <Compile Include="Assets\Scripts\HUD\Pauser.cs" />
      <Compile Include="Assets\Scripts\HUD\Score.cs" />
@@ -76,8 +74,10 @@
      <Compile Include="Assets\Scripts\Level\Remover.cs" />
      <Compile Include="Assets\Scripts\Level\SetParticleSortingLayer.cs" />
      <Compile Include="Assets\Scripts\Level\Spawner.cs" />
+     <Compile Include="Assets\Scripts\Pickups\BombPickup.cs" />
+     <Compile Include="Assets\Scripts\Pickups\HealthPickup.cs" />
      <Compile Include="Assets\Scripts\Weapon\Bomb.cs" />
-     <Compile Include="Assets\Scripts\Weapon\LayBombs.cs" />
+     <Compile Include="Assets\Scripts\Weapon\BombContainer.cs" />
      <Compile Include="Assets\Scripts\Weapon\Projectile.cs" />
      <Compile Include="Assets\Scripts\Weapon\RangedWeapon.cs" />
      <Compile Include="Assets\Scripts\Weapon\Rocket.cs" />

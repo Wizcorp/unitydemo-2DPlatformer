@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickup : Actor
+public abstract class Pickup : Actor
 {
+    public AudioClip pickupClip;		    // Sound to play when picked up.
+
     private Animator anim;                  // Reference to the animator component.
     private bool landed;					// Whether or not the crate has landed.
     private bool picked = false;
@@ -28,11 +30,12 @@ public class Pickup : Actor
         // If the player enters the trigger zone...
         if (other.tag == "Player")
         {
-            if (other.gameObject.GetComponent<Actor>().isAlive)
+            Character character = other.gameObject.GetComponent<Character>();
+            if (character.isAlive && OnTryPickUp(character))
             {
-                OnPickedUp(other.gameObject);
+                if (pickupClip)
+                    AudioSource.PlayClipAtPoint(pickupClip, transform.position);
 
-                // Destroy the crate.
                 Destroy(transform.root.gameObject);
                 picked = true;
             }
@@ -49,7 +52,5 @@ public class Pickup : Actor
         }
     }
 
-    protected virtual void OnPickedUp(GameObject gameObject)
-    {
-    }
+    protected abstract bool OnTryPickUp(Character character);
 }

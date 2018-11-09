@@ -3,8 +3,9 @@ using System.Collections;
 
 public class PlayerCharacter : Character
 {	
-	public AudioClip[] ouchClips;               // Array of clips to play when the player is damaged.
-    public AudioClip[] jumpClips;           // Array of clips for when the player jumps.
+	public AudioClip[]  ouchClips;          // Array of clips to play when the player is damaged.
+    public AudioClip[]  jumpClips;          // Array of clips for when the player jumps.
+    public AudioClip    bombsAway;          // Sound for when the player lays a bomb.
 
     public AudioClip[] taunts;              // Array of clips for when the player taunts.
     public float tauntProbability = 50f;    // Chance of a taunt happening.
@@ -15,9 +16,11 @@ public class PlayerCharacter : Character
     private SpriteRenderer healthBar;			// Reference to the sprite renderer of the health bar.
 	private float lastHitTime;					// The time at which the player was last hit.
 	private Vector3 healthScale;				// The local scale of the health bar initially (with full health).
-	private Animator anim;						// Reference to the Animator on the player
+	private Animator anim;                      // Reference to the Animator on the player
 
-	protected override void Awake ()
+    private GUITexture bombHUD;         // Heads up display of whether the player has a bomb or not.
+
+    protected override void Awake ()
 	{
         base.Awake();
 
@@ -25,9 +28,18 @@ public class PlayerCharacter : Character
 		healthBar = GameObject.Find("HealthBar").GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
 
-		// Getting the intial scale of the healthbar (whilst the player has full health).
-		healthScale = healthBar.transform.localScale;
+        bombHUD = GameObject.Find("ui_bombHUD").GetComponent<GUITexture>();
+
+        // Getting the intial scale of the healthbar (whilst the player has full health).
+        healthScale = healthBar.transform.localScale;
 	}
+
+    protected override void Update()
+    {
+        base.Update();
+
+        bombHUD.enabled = GetBombContainer().HasBombs();
+    }
 
     public override void SetOrientation(Vector2 direction)
     {
@@ -68,6 +80,12 @@ public class PlayerCharacter : Character
         AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
     }
 
+    public override void UseBomb()
+    {
+        base.UseBomb();
+        AudioSource.PlayClipAtPoint(bombsAway, transform.position);
+    }
+
     protected override void OnDamageReceived(float amount)
     {
         base.OnDamageReceived(amount);
@@ -89,6 +107,8 @@ public class PlayerCharacter : Character
 
     protected override void OnDied()
     {
+        base.OnDied();
+
         // Find all of the colliders on the gameobject and set them all to be triggers.
         Collider2D[] cols = GetComponents<Collider2D>();
         foreach (Collider2D c in cols)
