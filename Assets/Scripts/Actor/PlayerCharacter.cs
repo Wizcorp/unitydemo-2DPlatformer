@@ -13,33 +13,13 @@ public class PlayerCharacter : Character
 
     private int tauntIndex;                 // The index of the taunts array indicating the most recent taunt.
 
-    private SpriteRenderer healthBar;			// Reference to the sprite renderer of the health bar.
-	private float lastHitTime;					// The time at which the player was last hit.
-	private Vector3 healthScale;				// The local scale of the health bar initially (with full health).
 	private Animator anim;                      // Reference to the Animator on the player
-
-    private GUITexture bombHUD;         // Heads up display of whether the player has a bomb or not.
 
     protected override void Awake ()
 	{
         base.Awake();
-
-		// Setting up references.
-		healthBar = GameObject.Find("HealthBar").GetComponent<SpriteRenderer>();
 		anim = GetComponent<Animator>();
-
-        bombHUD = GameObject.Find("ui_bombHUD").GetComponent<GUITexture>();
-
-        // Getting the intial scale of the healthbar (whilst the player has full health).
-        healthScale = healthBar.transform.localScale;
 	}
-
-    protected override void Update()
-    {
-        base.Update();
-
-        bombHUD.enabled = GetBombContainer().HasBombs();
-    }
 
     public override void SetOrientation(Vector2 direction)
     {
@@ -90,19 +70,11 @@ public class PlayerCharacter : Character
     {
         base.OnDamageReceived(amount);
 
-        UpdateHealthBar();
-
         if (health > 0f)
         {
             int i = Random.Range(0, ouchClips.Length);
             AudioSource.PlayClipAtPoint(ouchClips[i], transform.position);
         }
-    }
-
-    protected override void OnHealReceived(float amount)
-    {
-        base.OnHealReceived(amount);
-        UpdateHealthBar();
     }
 
     protected override void OnDied()
@@ -126,16 +98,6 @@ public class PlayerCharacter : Character
         // ... Trigger the 'Die' animation state
         anim.SetTrigger("Die");
     }
-
-    public void UpdateHealthBar ()
-	{
-		// Set the health bar's colour to proportion of the way between green and red based on the player's health.
-		healthBar.material.color = Color.Lerp(Color.green, Color.red, 1 - health * 0.01f);
-
-		// Set the scale of the health bar to be proportional to the player's health.
-		healthBar.transform.localScale = new Vector3(healthScale.x * health * 0.01f, 1, 1);
-	}
-
 
     public IEnumerator Taunt()
     {

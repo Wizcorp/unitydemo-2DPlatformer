@@ -62,10 +62,6 @@
      <Compile Include="Assets\Scripts\Actor\EnemyCharacter.cs" />
      <Compile Include="Assets\Scripts\Actor\Pickup.cs" />
      <Compile Include="Assets\Scripts\Actor\PlayerCharacter.cs" />
-     <Compile Include="Assets\Scripts\HUD\FollowPlayer.cs" />
-     <Compile Include="Assets\Scripts\HUD\Pauser.cs" />
-     <Compile Include="Assets\Scripts\HUD\Score.cs" />
-     <Compile Include="Assets\Scripts\HUD\ScoreShadow.cs" />
      <Compile Include="Assets\Scripts\Level\BackgroundParallax.cs" />
      <Compile Include="Assets\Scripts\Level\BackgroundPropSpawner.cs" />
      <Compile Include="Assets\Scripts\Level\CameraFollow.cs" />
@@ -76,6 +72,12 @@
      <Compile Include="Assets\Scripts\Level\Spawner.cs" />
      <Compile Include="Assets\Scripts\Pickups\BombPickup.cs" />
      <Compile Include="Assets\Scripts\Pickups\HealthPickup.cs" />
+     <Compile Include="Assets\Scripts\UI\Pauser.cs" />
+     <Compile Include="Assets\Scripts\UI\Score.cs" />
+     <Compile Include="Assets\Scripts\UI\ScoreShadow.cs" />
+     <Compile Include="Assets\Scripts\UI\UIBomb.cs" />
+     <Compile Include="Assets\Scripts\UI\UICrosshair.cs" />
+     <Compile Include="Assets\Scripts\UI\UIHealthbar.cs" />
      <Compile Include="Assets\Scripts\Weapon\Bomb.cs" />
      <Compile Include="Assets\Scripts\Weapon\BombContainer.cs" />
      <Compile Include="Assets\Scripts\Weapon\Projectile.cs" />

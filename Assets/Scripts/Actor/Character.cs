@@ -46,11 +46,6 @@ public class Character : Actor
         return rangedWeapon;
     }
 
-    protected BombContainer GetBombContainer()
-    {
-        return bombContainer;
-    }
-	
 	protected virtual void FixedUpdate ()
     {
         inFixedUpdate = true;
