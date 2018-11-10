@@ -3,12 +3,12 @@
 --- !u!1 &100000
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 6
   m_Component:
-  - 4: {fileID: 400000}
-  - 114: {fileID: 11400000}
+  - component: {fileID: 400000}
+  - component: {fileID: 11400000}
   m_Layer: 0
   m_Name: busCreator
   m_TagString: Untagged
@@ -19,12 +19,12 @@ GameObject:
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 6
   m_Component:
-  - 4: {fileID: 400002}
-  - 114: {fileID: 11400002}
+  - component: {fileID: 400002}
+  - component: {fileID: 11400002}
   m_Layer: 0
   m_Name: cabCreator
   m_TagString: Untagged
@@ -35,12 +35,12 @@ GameObject:
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 6
   m_Component:
-  - 4: {fileID: 400004}
-  - 114: {fileID: 11400004}
+  - component: {fileID: 400004}
+  - component: {fileID: 11400004}
   m_Layer: 0
   m_Name: swanCreator
   m_TagString: Untagged
@@ -51,11 +51,11 @@ GameObject:
 --- !u!1 &100006
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 6
   m_Component:
-  - 4: {fileID: 400006}
+  - component: {fileID: 400006}
   m_Layer: 0
   m_Name: backgroundAnimation
   m_TagString: Untagged
@@ -66,7 +66,7 @@ GameObject:
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -74,10 +74,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400006}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -85,10 +87,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400006}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -96,10 +100,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400006}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &400006
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -110,10 +116,12 @@ Transform:
   - {fileID: 400002}
   - {fileID: 400004}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
@@ -121,11 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b461c67a1aa2a49b5a87793a6aa18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  propParent: {fileID: 0}
   backgroundProp: {fileID: 5000000, guid: f9d0b7dac836a450f8040b62eb6ebd5f, type: 2}
   leftSpawnPosX: -24
   rightSpawnPosX: 24
-  minSpawnPosY: -5.5
-  maxSpawnPosY: -5.5
+  minSpawnPosY: -7.5
+  maxSpawnPosY: -7.5
   minTimeBetweenSpawns: 8
   maxTimeBetweenSpawns: 18
   minSpeed: 5
@@ -133,7 +142,7 @@ MonoBehaviour:
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
@@ -141,11 +150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b461c67a1aa2a49b5a87793a6aa18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  propParent: {fileID: 0}
   backgroundProp: {fileID: 5000000, guid: e22b0975178e44f1881534434127b177, type: 2}
   leftSpawnPosX: -24
   rightSpawnPosX: 24
-  minSpawnPosY: -6.4000001
-  maxSpawnPosY: -6.4000001
+  minSpawnPosY: -8.4
+  maxSpawnPosY: -8.4
   minTimeBetweenSpawns: 10
   maxTimeBetweenSpawns: 15
   minSpeed: 5
@@ -153,7 +163,7 @@ MonoBehaviour:
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
@@ -161,11 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67b461c67a1aa2a49b5a87793a6aa18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  propParent: {fileID: 0}
   backgroundProp: {fileID: 5000000, guid: cccb6fdca5fce44bc94bacf40fa493e8, type: 2}
   leftSpawnPosX: -24
   rightSpawnPosX: 24
-  minSpawnPosY: 4
-  maxSpawnPosY: 8
+  minSpawnPosY: 5
+  maxSpawnPosY: 9
   minTimeBetweenSpawns: 2
   maxTimeBetweenSpawns: 8
   minSpeed: 5
@@ -178,7 +189,6 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100006}
-  m_IsPrefabParent: 1
-  m_IsExploded: 1
+  m_IsPrefabAsset: 1
