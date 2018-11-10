@@ -3,7 +3,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    private Character m_Character;
+    private Character   m_Character;
+    private Vector2     m_LastMousePosition = Vector2.zero;
+    private bool        m_UsingMouse = false;
 
 	void Awake()
 	{
@@ -41,19 +43,36 @@ public class PlayerController : MonoBehaviour
 
     Vector2 GetAimDirection()
     {
-        RangedWeapon rangedWeapon = m_Character.GetRangedWeapon();
-        Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        v -= rangedWeapon.transform.position;
-        v.z = 0.0f;
-        v.Normalize();
-
-        if (v.sqrMagnitude == 0f)
+        if (m_LastMousePosition != (Vector2)Input.mousePosition)
         {
-            return m_Character.GetOrientation();
+            m_LastMousePosition = Input.mousePosition;
+            m_UsingMouse = true;
+        }
+
+        float aimX = Input.GetAxis("AimX");
+        float aimY = Input.GetAxis("AimY");
+
+        if (aimX != 0f || aimY != 0f)
+        {
+            m_UsingMouse = false;
+            return new Vector2(aimX, aimY).normalized;
+        }
+
+        if (m_UsingMouse)
+        {
+            RangedWeapon rangedWeapon = m_Character.GetRangedWeapon();
+            Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            v -= (Vector2)rangedWeapon.transform.position;
+            return v.normalized;
         }
         else
         {
-            return v;
+            Vector2 v = m_Character.GetOrientation();
+            float h = Input.GetAxis("Horizontal");
+            if (h != 0f)
+                v.x = Mathf.Sign(h);
+
+            return v.x > 0f ? Vector2.right : Vector2.left;
         }
     }
 }

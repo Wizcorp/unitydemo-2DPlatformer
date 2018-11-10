@@ -22,7 +22,7 @@ public class Character : Actor
     private Vector2 m_GroundNormal = Vector2.up;
 
     private float   m_Movement = 0f;
-    private bool    m_InFixedUpdate = false;
+    private Vector2 m_JumpVector = Vector2.zero;
 
     private RangedWeapon    m_RangedWeapon = null;
     private BombContainer   m_BombContainer = null;
@@ -46,13 +46,12 @@ public class Character : Actor
 
 	protected virtual void FixedUpdate ()
     {
-        m_InFixedUpdate = true;
         if (isAlive)
         {
             UpdateGround();
 
-            if (m_IsJumping && m_IsOnGround)
-                m_IsJumping = false;
+            if (m_IsJumping)
+                UpdateJumping();
 
             if (Mathf.Abs(m_Movement) > Mathf.Epsilon)
                 DoMove();
@@ -62,10 +61,7 @@ public class Character : Actor
         }
     }
 
-    protected virtual void Update()
-    {
-        m_InFixedUpdate = false;
-    }
+    protected virtual void Update() { }
 
     void UpdateGround()
     {
@@ -108,7 +104,7 @@ public class Character : Actor
         bool wasHovering = m_IsHovering;
         m_IsHovering = hovering;
 
-        if (m_IsHovering && !wasHovering && m_InFixedUpdate)
+        if (m_IsHovering && !wasHovering && Time.inFixedTimeStep)
             DoHover();
     }
 
@@ -161,7 +157,7 @@ public class Character : Actor
         Debug.Assert(CanMove());
         m_Movement = moveVector;
 
-        if (m_InFixedUpdate)
+        if (Time.inFixedTimeStep)
             DoMove();
     }
 
@@ -197,7 +193,28 @@ public class Character : Actor
         Debug.Assert(CanJump());
 
         m_IsJumping = true;
-        GetComponent<Rigidbody2D>().AddForce(direction * jumpForce);
+        m_JumpVector = direction * jumpForce;
+
+        if (Time.inFixedTimeStep)
+            UpdateJumping();
+    }
+
+    void UpdateJumping()
+    {
+        Rigidbody2D body = GetComponent<Rigidbody2D>();
+
+        if (m_JumpVector != Vector2.zero)
+        {
+            body.AddForce(m_JumpVector);
+            m_JumpVector = Vector2.zero;
+        }
+        else
+        {
+            Vector2 velocity = body.velocity;
+
+            if (m_IsJumping && m_IsOnGround && velocity.y <= Mathf.Epsilon)
+                m_IsJumping = false;
+        }
     }
 
     public bool CanShoot()
