@@ -5,7 +5,6 @@ public class Remover : MonoBehaviour
 {
 	public GameObject splash;
 
-
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		// If the player hits the trigger...

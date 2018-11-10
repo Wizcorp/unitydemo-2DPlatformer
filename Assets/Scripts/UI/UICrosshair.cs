@@ -7,20 +7,20 @@ public class UICrosshair : MonoBehaviour
     public Transform pivot;
     public Transform target;
 
-    private SpriteRenderer  targetRenderer;
-    private Character       character;
+    private SpriteRenderer  m_TargetRenderer;
+    private Character       m_Character;
 
     void Awake()
     {
-        character = GetComponentInParent<Character>();
-        targetRenderer = target.GetComponent<SpriteRenderer>();
+        m_Character = GetComponentInParent<Character>();
+        m_TargetRenderer = target.GetComponent<SpriteRenderer>();
     }
 
 	void Update ()
     {
-        if (character && (targetRenderer.enabled = character.isAlive))
+        if (m_Character && (m_TargetRenderer.enabled = m_Character.isAlive))
         {
-            Vector2 orientation = character.GetOrientation();
+            Vector2 orientation = m_Character.GetOrientation();
             orientation.x = Mathf.Abs(orientation.x);
             Quaternion q = Quaternion.FromToRotation(Vector2.right, orientation);
             pivot.localRotation = q;

@@ -4,16 +4,16 @@ using UnityEngine;
 
 public abstract class Pickup : Actor
 {
-    public AudioClip pickupClip;		    // Sound to play when picked up.
+    public AudioClip pickupClip;
 
-    private Animator anim;                  // Reference to the animator component.
-    private bool landed;					// Whether or not the crate has landed.
-    private bool picked = false;
+    private Animator    m_Animator;
+    private bool        m_Landed = false;
+    private bool        m_Picked = false;
 
     protected override void Awake()
     {
         base.Awake();
-        anim = transform.root.GetComponent<Animator>();
+        m_Animator = transform.root.GetComponent<Animator>();
     }
 
     protected override void OnDied()
@@ -24,7 +24,7 @@ public abstract class Pickup : Actor
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (picked || isDead)
+        if (m_Picked || isDead)
             return;
 
         // If the player enters the trigger zone...
@@ -37,18 +37,18 @@ public abstract class Pickup : Actor
                     AudioSource.PlayClipAtPoint(pickupClip, transform.position);
 
                 Destroy(transform.root.gameObject);
-                picked = true;
+                m_Picked = true;
             }
         }
         // Otherwise if the crate hits the ground...
-        else if (other.tag == "ground" && !landed)
+        else if (other.tag == "ground" && !m_Landed)
         {
             // ... set the Land animator trigger parameter.
-            anim.SetTrigger("Land");
+            m_Animator.SetTrigger("Land");
 
             transform.parent = null;
             gameObject.AddComponent<Rigidbody2D>();
-            landed = true;
+            m_Landed = true;
         }
     }
 

@@ -3,46 +3,46 @@ using System.Collections;
 
 public class EnemyCharacter : Character
 {
-    public float damage = 10f;
-    public float minDamageInterval = 0.2f;
-    public Sprite deadEnemy;            // A sprite of the enemy when it's dead.
-    public Sprite damagedEnemy;         // An optional sprite of the enemy when it's damaged.
-    public AudioClip[] deathClips;      // An array of audioclips that can play when the enemy dies.
-    public GameObject hundredPointsUI;  // A prefab of 100 that appears when the enemy dies.
-    public float deathSpinMin = -100f;          // A value to give the minimum amount of Torque when dying
-    public float deathSpinMax = 100f;			// A value to give the maximum amount of Torque when dying
+    public float        damage = 10f;
+    public float        minDamageInterval = 0.2f;
+    public float        pushForce = 10f;
+    public Sprite       deadEnemy;              // A sprite of the enemy when it's dead.
+    public Sprite       damagedEnemy;           // An optional sprite of the enemy when it's damaged.
+    public AudioClip[]  deathClips;             // An array of audioclips that can play when the enemy dies.
+    public float        deathSpinMin = -100f;   // A value to give the minimum amount of Torque when dying
+    public float        deathSpinMax = 100f;	// A value to give the maximum amount of Torque when dying
+    public GameObject   hundredPointsUI;        // A prefab of 100 that appears when the enemy dies.
 
-    public float pushForce = 10f;
+    private SpriteRenderer  m_SpriteRenderer;
+    private Animator        m_Animator;
+    private Score           m_Score;
 
-    private SpriteRenderer ren;			// Reference to the sprite renderer.
-    private Animator anim;
-    private Score score;				// Reference to the Score script.
-
-    private GameObject  collidingPlayer;
-    private bool        firstHit = false;
-    private float       lastDamageTime = 0f;
+    private GameObject      m_CollidingPlayer;
+    private bool            m_NeedApplyPushForce = false;
+    private float           m_LastDamageTime = 0f;
 
     protected override void Awake()
     {
         base.Awake();
 
-        // Setting up the references.
-        ren = transform.Find("body").GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        score = GameObject.Find("Score").GetComponent<Score>();
+        m_SpriteRenderer = transform.Find("body").GetComponent<SpriteRenderer>();
+        m_Animator = GetComponent<Animator>();
+        m_Score = GameObject.Find("Score").GetComponent<Score>();
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        transform.localRotation = Quaternion.FromToRotation(Vector2.up, GetGroundNormal());
-        collidingPlayer = null;
+
+        transform.localRotation = Quaternion.FromToRotation(Vector2.up, groundNormal);
+        m_CollidingPlayer = null;
     }
 
     protected override void Update()
     {
         base.Update();
-        if (collidingPlayer)
+
+        if (m_CollidingPlayer)
         {
             TryApplyDamage();
         }
@@ -50,10 +50,10 @@ public class EnemyCharacter : Character
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Player" && !collidingPlayer)
+        if (col.gameObject.tag == "Player" && !m_CollidingPlayer)
         {
-            collidingPlayer = col.gameObject;
-            firstHit = true;
+            m_CollidingPlayer = col.gameObject;
+            m_NeedApplyPushForce = true;
             TryApplyDamage();
         }
     }
@@ -61,33 +61,39 @@ public class EnemyCharacter : Character
     void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject.tag == "Player")
-            collidingPlayer = col.gameObject;
+            m_CollidingPlayer = col.gameObject;
     }
 
     void TryApplyDamage()
     {
-        if ((Time.time - lastDamageTime) < minDamageInterval)
+        if ((Time.time - m_LastDamageTime) < minDamageInterval)
             return;
 
-        Vector3 knockUpForce = collidingPlayer.transform.position - transform.position
+        Vector3 knockUpForce = m_CollidingPlayer.transform.position - transform.position
             + Vector3.up * 5f;
 
         ActorEffect effect;
         effect.type = ActorEffect.Type.Damage;
         effect.amount = damage;
-        effect.forceVector = firstHit ? knockUpForce * pushForce : Vector3.zero;
+        effect.forceVector = Vector3.zero;
 
-        collidingPlayer.GetComponent<Actor>().ApplyEffect(effect);
+        if (m_NeedApplyPushForce)
+        {
+            effect.forceVector = knockUpForce * pushForce;
+        }
 
-        firstHit = false;
-        lastDamageTime = Time.time;
+        m_CollidingPlayer.GetComponent<Actor>().ApplyEffect(effect);
+
+        m_NeedApplyPushForce = false;
+        m_LastDamageTime = Time.time;
     }
 
     public override void Move(float moveVector)
     {
         base.Move(moveVector);
+
         float v = GetComponent<Rigidbody2D>().velocity.x;
-        anim.SetFloat("Speed", Mathf.Abs(v));
+        m_Animator.SetFloat("Speed", Mathf.Abs(v));
     }
 
     protected override void OnDamageReceived(float amount)
@@ -98,9 +104,9 @@ public class EnemyCharacter : Character
 
         if (health > 0f && health < totalHealth)
         {
-            if (damagedEnemy != null && !wasDamaged)
+            if (damagedEnemy && !wasDamaged)
             {
-                ren.sprite = damagedEnemy;
+                m_SpriteRenderer.sprite = damagedEnemy;
             }
         }
     }
@@ -118,12 +124,12 @@ public class EnemyCharacter : Character
 			s.enabled = false;
 		}
 
-		// Re-enable the main sprite renderer and set it's sprite to the deadEnemy sprite.
-		ren.enabled = true;
-		ren.sprite = deadEnemy;
+        // Re-enable the main sprite renderer and set it's sprite to the deadEnemy sprite.
+        m_SpriteRenderer.enabled = true;
+        m_SpriteRenderer.sprite = deadEnemy;
 
-		// Increase the score by 100 points
-		score.score += 100;
+        // Increase the score by 100 points
+        m_Score.score += 100;
 
 		// Allow the enemy to rotate and spin it by adding a torque.
 		GetComponent<Rigidbody2D>().fixedAngle = false;

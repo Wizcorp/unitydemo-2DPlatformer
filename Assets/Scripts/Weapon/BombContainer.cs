@@ -4,21 +4,30 @@ using System.Collections;
 public class BombContainer : MonoBehaviour
 {
     public Bomb bombType;
-    private int bombCount = 0;
+
+    private int m_BombCount = 0;
+
+    public int bombCount
+    {
+        get { return m_BombCount; }
+    }
 
     public bool AddBomb()
     {
-        ++bombCount;
+        ++m_BombCount;
         return true;
     }
 
-    public bool HasBombs() { return bombCount > 0; }
+    public bool HasBombs()
+    {
+        return m_BombCount > 0;
+    }
 
     public GameObject TakeBomb(Vector2 position)
     {
         Debug.Assert(HasBombs());
 
-        --bombCount;
+        --m_BombCount;
         return Instantiate(bombType.gameObject, position, Quaternion.identity);
     }
 }

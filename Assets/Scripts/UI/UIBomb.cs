@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class UIBomb : MonoBehaviour
 {
-    private GUITexture      bombIcon;
-    private BombContainer   bombContainer;
+    private GUITexture      m_BombIcon;
+    private BombContainer   m_BombContainer;
 
     void Awake()
     {
-        bombIcon = GetComponent<GUITexture>();
+        m_BombIcon = GetComponent<GUITexture>();
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        bombContainer = player.GetComponentInChildren<BombContainer>();
-        if (!bombContainer)
-            bombIcon.enabled = false;
+        m_BombContainer = player.GetComponentInChildren<BombContainer>();
+        if (!m_BombContainer)
+            m_BombIcon.enabled = false;
     }
 	
 	void Update ()
     {
-        if (bombContainer)
-            bombIcon.enabled = bombContainer.HasBombs();
+        if (m_BombContainer)
+            m_BombIcon.enabled = m_BombContainer.HasBombs();
     }
 }

@@ -5,14 +5,13 @@ public class HealthPickup : Pickup
 {
 	public float healthBonus;				// How much health the crate gives the player.
 
-	private PickupSpawner pickupSpawner;	// Reference to the pickup spawner.
+	private PickupSpawner m_PickupSpawner;	// Reference to the pickup spawner.
 
 	protected override void Awake ()
 	{
         base.Awake();
 
-		// Setting up the references.
-		pickupSpawner = GameObject.Find("pickupManager").GetComponent<PickupSpawner>();
+        m_PickupSpawner = GameObject.Find("pickupManager").GetComponent<PickupSpawner>();
 	}
 
     protected override bool OnTryPickUp(Character character)
@@ -25,7 +24,7 @@ public class HealthPickup : Pickup
         character.ApplyEffect(effect);
 
         // Trigger a new delivery.
-        pickupSpawner.StartCoroutine(pickupSpawner.DeliverPickup());
+        m_PickupSpawner.StartCoroutine(m_PickupSpawner.DeliverPickup());
 
         return true;
     }
@@ -33,6 +32,7 @@ public class HealthPickup : Pickup
     protected override void OnDied()
     {
         base.OnDied();
-        pickupSpawner.StartCoroutine(pickupSpawner.DeliverPickup());
+
+        m_PickupSpawner.StartCoroutine(m_PickupSpawner.DeliverPickup());
     }
 }

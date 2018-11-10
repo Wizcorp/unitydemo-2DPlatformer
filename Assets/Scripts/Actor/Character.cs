@@ -4,74 +4,67 @@ using UnityEngine;
 
 public class Character : Actor
 {
-    public float    jumpForce = 1000f;         // Amount of force added when the player jumps.
+    private const float MaxAltitude = 14f;
 
+    public float    jumpForce = 1000f;         // Amount of force added when the player jumps.
     public float    moveForce = 365f;          // Amount of force added to move the player left and right.
     public float    maxSpeed = 5f;				// The fastest the player can travel in the x axis.
-
-    private const float maxAltitude = 14f;
-
     public float    hoverAltitude = 10f;
     public float    hoverForce = 15f;
     public float    maxHoverSpeed = 3f;
 
-    private Vector2 orientation = Vector2.right;
+    private Vector2 m_Orientation = Vector2.right;
 
-    private bool    isOnGround = false;
-    private bool    isJumping = false;
-    private bool    isHovering = false;
+    private bool    m_IsOnGround = false;
+    private bool    m_IsJumping = false;
+    private bool    m_IsHovering = false;
 
-    private Vector2 groundNormal;
+    private Vector2 m_GroundNormal = Vector2.up;
 
-    private float   movement = 0f;
-    private bool    inFixedUpdate = false;
+    private float   m_Movement = 0f;
+    private bool    m_InFixedUpdate = false;
 
-    private RangedWeapon    rangedWeapon;
-    private BombContainer   bombContainer;
-    private GameObject      activeBomb;
+    private RangedWeapon    m_RangedWeapon = null;
+    private BombContainer   m_BombContainer = null;
+    private GameObject      m_ActiveBomb;
+
+    protected Vector2 groundNormal
+    {
+        get { return m_GroundNormal; }
+    }
 
     protected override void Awake()
     {
         base.Awake();
 
-        rangedWeapon = GetComponentInChildren<RangedWeapon>();
-        if (rangedWeapon)
-            rangedWeapon.shooterTag = gameObject.tag;
+        m_RangedWeapon = GetComponentInChildren<RangedWeapon>();
+        if (m_RangedWeapon)
+            m_RangedWeapon.shooterTag = gameObject.tag;
 
-        bombContainer = GetComponentInChildren<BombContainer>();
-    }
-
-    protected RangedWeapon GetRangedWeapon()
-    {
-        return rangedWeapon;
+        m_BombContainer = GetComponentInChildren<BombContainer>();
     }
 
 	protected virtual void FixedUpdate ()
     {
-        inFixedUpdate = true;
+        m_InFixedUpdate = true;
         if (isAlive)
         {
             UpdateGround();
 
-            if (isJumping && isOnGround)
-                isJumping = false;
+            if (m_IsJumping && m_IsOnGround)
+                m_IsJumping = false;
 
-            if (Mathf.Abs(movement) > Mathf.Epsilon)
+            if (Mathf.Abs(m_Movement) > Mathf.Epsilon)
                 DoMove();
 
-            if (isHovering)
+            if (m_IsHovering)
                 DoHover();
         }
     }
 
     protected virtual void Update()
     {
-        inFixedUpdate = false;
-    }
-
-    protected Vector2 GetGroundNormal()
-    {
-        return groundNormal;
+        m_InFixedUpdate = false;
     }
 
     void UpdateGround()
@@ -79,11 +72,11 @@ public class Character : Actor
         Vector3 startPos = transform.position + Vector3.up * 0.5f;
         Vector3 endPos = startPos + Vector3.down * 2.0f;
         RaycastHit2D hit = Physics2D.Linecast(startPos, endPos, 1 << LayerMask.NameToLayer("Ground"));
-        isOnGround = hit;
+        m_IsOnGround = hit;
         if (hit)
-            groundNormal = hit.normal;
+            m_GroundNormal = hit.normal;
         else
-            groundNormal = Vector2.up;
+            m_GroundNormal = Vector2.up;
     }
 
     public bool CanChangeOrientation()
@@ -93,14 +86,14 @@ public class Character : Actor
 
     public virtual void SetOrientation(Vector2 direction)
     {
-        orientation = direction;
+        m_Orientation = direction;
 
         Vector3 localScale = transform.localScale;
-        localScale.x = Mathf.Sign(orientation.x) * Mathf.Abs(localScale.x);
+        localScale.x = Mathf.Sign(m_Orientation.x) * Mathf.Abs(localScale.x);
         transform.localScale = localScale;
     }
 
-    public Vector2 GetOrientation() { return orientation; }
+    public Vector2 GetOrientation() { return m_Orientation; }
 
 
     public bool CanHover()
@@ -112,14 +105,12 @@ public class Character : Actor
     {
         Debug.Assert(CanHover());
 
-        bool wasHovering = isHovering;
-        isHovering = hovering;
+        bool wasHovering = m_IsHovering;
+        m_IsHovering = hovering;
 
-        if (isHovering && !wasHovering && inFixedUpdate)
+        if (m_IsHovering && !wasHovering && m_InFixedUpdate)
             DoHover();
     }
-
-    public bool IsHovering() { return isHovering; }
 
     void DoHover()
     {
@@ -143,9 +134,9 @@ public class Character : Actor
             body.velocity = velocity;
         }
 
-        if (transform.position.y > maxAltitude)
+        if (transform.position.y > MaxAltitude)
         {
-            transform.position = new Vector2(transform.position.x, maxAltitude);
+            transform.position = new Vector2(transform.position.x, MaxAltitude);
             velocity.y = 0f;
             body.velocity = velocity;
         }
@@ -168,9 +159,9 @@ public class Character : Actor
     public virtual void Move(float moveVector)
     {
         Debug.Assert(CanMove());
-        movement = moveVector;
+        m_Movement = moveVector;
 
-        if (inFixedUpdate)
+        if (m_InFixedUpdate)
             DoMove();
     }
 
@@ -179,12 +170,12 @@ public class Character : Actor
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         Vector2 velocity = body.velocity;
 
-        if (Mathf.Abs(movement) > Mathf.Epsilon )
+        if (Mathf.Abs(m_Movement) > Mathf.Epsilon )
         {
-            float velocityInDirection = movement * velocity.x;
+            float velocityInDirection = m_Movement * velocity.x;
             if (velocityInDirection < maxSpeed)
             {
-                body.AddForce(Vector2.right * movement * moveForce);
+                body.AddForce(Vector2.right * m_Movement * moveForce);
             }
         }
 
@@ -193,43 +184,48 @@ public class Character : Actor
             body.velocity = new Vector2(Mathf.Sign(velocity.x) * maxSpeed, velocity.y);
         }
 
-        movement = 0f;
+        m_Movement = 0f;
     }
 
     public bool CanJump()
     {
-        return isAlive && isOnGround && !isJumping && !isHovering;
+        return isAlive && m_IsOnGround && !m_IsJumping && !m_IsHovering;
     }
 
     public virtual void Jump(Vector2 direction)
     {
         Debug.Assert(CanJump());
 
-        isJumping = true;
+        m_IsJumping = true;
         GetComponent<Rigidbody2D>().AddForce(direction * jumpForce);
     }
 
     public bool CanShoot()
     {
-        return isAlive && rangedWeapon != null && rangedWeapon.CanFire();
+        return isAlive && m_RangedWeapon && m_RangedWeapon.CanFire();
     }
 
     public virtual void Shoot(Vector2 direction)
     {
         Debug.Assert(CanShoot());
 
-        rangedWeapon.Fire(direction);
+        m_RangedWeapon.Fire(direction);
+    }
+
+    public RangedWeapon GetRangedWeapon()
+    {
+        return m_RangedWeapon;
     }
 
     public bool CanUseBomb()
     {
-        return isAlive && bombContainer && bombContainer.HasBombs() && !activeBomb;
+        return isAlive && m_BombContainer && m_BombContainer.HasBombs() && !m_ActiveBomb;
     }
 
     public virtual void UseBomb()
     {
         Debug.Assert(CanUseBomb());
 
-        activeBomb = bombContainer.TakeBomb(transform.position);
+        m_ActiveBomb = m_BombContainer.TakeBomb(transform.position);
     }
 }

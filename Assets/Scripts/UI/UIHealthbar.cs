@@ -8,27 +8,27 @@ public class UIHealthbar : MonoBehaviour
     public Transform    healthBar;
     public bool         deactivateOnDead = true;
 
-    private Actor           actorComponent;
-    private SpriteRenderer  healthBarRenderer;
-    private float           lastNormalizedHealth = -1f;
+    private Actor           m_Actor;
+    private SpriteRenderer  m_HealthBarRenderer;
+    private float           m_LastNormalizedHealth = -1f;
 
     void Awake()
     {
         if (actor != null)
-            actorComponent = actor.GetComponent<Actor>();
+            m_Actor = actor.GetComponent<Actor>();
         else
-            actorComponent = GetComponentInParent<Actor>();
+            m_Actor = GetComponentInParent<Actor>();
 
-        healthBarRenderer = healthBar.GetComponent<SpriteRenderer>();
+        m_HealthBarRenderer = healthBar.GetComponent<SpriteRenderer>();
     }
 	
 	void Update ()
     {
-		if (actorComponent)
+		if (m_Actor)
         {
-            if (actorComponent.isAlive)
+            if (m_Actor.isAlive)
             {
-                SetHealthBar(actorComponent.health / actorComponent.totalHealth);
+                SetHealthBar(m_Actor.health / m_Actor.totalHealth);
             }
             else if (deactivateOnDead)
             {
@@ -59,13 +59,13 @@ public class UIHealthbar : MonoBehaviour
 
     void SetHealthBar(float normalizedHealth)
     {
-        if (lastNormalizedHealth == normalizedHealth)
+        if (m_LastNormalizedHealth == normalizedHealth)
             return;
 
-        lastNormalizedHealth = normalizedHealth;
+        m_LastNormalizedHealth = normalizedHealth;
 
         Color barColor = Color.Lerp(Color.green, Color.red, 1 - normalizedHealth);
-        healthBarRenderer.material.color = barColor;
+        m_HealthBarRenderer.material.color = barColor;
 
         healthBar.localScale = new Vector3(normalizedHealth, 1, 1);
     }

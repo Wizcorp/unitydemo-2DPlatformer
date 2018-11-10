@@ -7,23 +7,26 @@ public class Actor : MonoBehaviour
     public float    totalHealth = 100f;
     public bool     indestructable = false;
 
-    [HideInInspector]
-    public bool     isDead = false;
+    private float m_Health = 0f;
 
-    [HideInInspector]
-    public float    health;
+    public float health
+    {
+        get { return m_Health; }
+    }
 
-    [HideInInspector]
-    public bool isAlive {
-        get { return health > 0f; }
+    public bool isAlive
+    {
+        get { return m_Health >= Mathf.Epsilon; }
+    }
+
+    public bool isDead
+    {
+        get { return m_Health < Mathf.Epsilon; }
     }
 
     protected virtual void Awake()
     {
-        if (isDead)
-            health = 0f;
-        else
-            health = totalHealth;
+        m_Health = totalHealth;
     }
 
     public virtual void ApplyEffect(ActorEffect actorEffect)
@@ -42,11 +45,8 @@ public class Actor : MonoBehaviour
         {
             case ActorEffect.Type.Damage:
                 OnDamageReceived(actorEffect.amount);
-                if (health == 0f)
-                {
-                    isDead = true;
+                if (isDead)
                     OnDied();
-                }
                 break;
             case ActorEffect.Type.Heal:
                 OnHealReceived(actorEffect.amount);
@@ -54,8 +54,7 @@ public class Actor : MonoBehaviour
             case ActorEffect.Type.Kill:
                 if (!indestructable)
                 {
-                    health = 0f;
-                    isDead = true;
+                    m_Health = 0f;
                     OnDied();
                 }
                 break;
@@ -65,12 +64,12 @@ public class Actor : MonoBehaviour
     protected virtual void OnDamageReceived(float amount)
     {
         if (!indestructable)
-            health = Mathf.Max(health - amount, 0f);
+            m_Health = Mathf.Max(m_Health - amount, 0f);
     }
 
     protected virtual void OnHealReceived(float amount)
     {
-        health = Mathf.Min(health + amount, totalHealth);
+        m_Health = Mathf.Min(m_Health + amount, totalHealth);
     }
 
     protected virtual void OnDied() { }

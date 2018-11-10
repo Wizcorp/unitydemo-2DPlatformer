@@ -11,19 +11,19 @@ public class RangedWeapon : MonoBehaviour
     [HideInInspector]
     public string       shooterTag;
 
-    private Transform   muzzleTransform;
-    private float       lastShotTime = 0f;
+    private Transform   m_MuzzleTransform;
+    private float       m_LastShotTime = 0f;
 
     protected virtual void Awake()
     {
-        muzzleTransform = transform.Find("muzzle");
-        if (!muzzleTransform)
-            muzzleTransform = transform;
+        m_MuzzleTransform = transform.Find("muzzle");
+        if (!m_MuzzleTransform)
+            m_MuzzleTransform = transform;
     }
 
     public virtual bool CanFire()
     {
-        return (Time.time - lastShotTime) >= reloadTime;
+        return (Time.time - m_LastShotTime) >= reloadTime;
     }
 
     public virtual void Fire(Vector2 direction)
@@ -34,14 +34,14 @@ public class RangedWeapon : MonoBehaviour
             PlayFireSound();
 
         Quaternion rotation = Quaternion.FromToRotation(Vector3.right, direction);
-        Rigidbody2D bulletInstance = Instantiate(projectile, muzzleTransform.position, rotation) as Rigidbody2D;
+        Rigidbody2D bulletInstance = Instantiate(projectile, m_MuzzleTransform.position, rotation) as Rigidbody2D;
 
-        Projectile projectileComp = bulletInstance.GetComponent<Projectile>();
-        projectileComp.shooterTag = shooterTag;
+        Projectile projectileComponent = bulletInstance.GetComponent<Projectile>();
+        projectileComponent.shooterTag = shooterTag;
 
-        bulletInstance.velocity = direction * projectileComp.speed;
+        bulletInstance.velocity = direction * projectileComponent.speed;
 
-        lastShotTime = Time.time;
+        m_LastShotTime = Time.time;
     }
 
     void PlayFireSound()

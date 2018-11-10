@@ -5,17 +5,13 @@ public class Score : MonoBehaviour
 {
 	public int score = 0;					// The player's score.
 
-
-	private PlayerCharacter playerCharacter;	// Reference to the player control script.
-	private int previousScore = 0;			    // The score in the previous frame.
-
+	private PlayerCharacter m_PlayerCharacter;
+	private int             m_PreviousScore = 0;
 
 	void Awake ()
 	{
-        // Setting up the reference.
-        playerCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>();
+        m_PlayerCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>();
 	}
-
 
 	void Update ()
 	{
@@ -23,12 +19,12 @@ public class Score : MonoBehaviour
 		GetComponent<GUIText>().text = "Score: " + score;
 
 		// If the score has changed...
-		if(previousScore != score && playerCharacter != null)
+		if(m_PreviousScore != score && m_PlayerCharacter)
             // ... play a taunt.
-            playerCharacter.StartCoroutine(playerCharacter.Taunt());
+            m_PlayerCharacter.StartCoroutine(m_PlayerCharacter.Taunt());
 
-		// Set the previous score to this frame's score.
-		previousScore = score;
+        // Set the previous score to this frame's score.
+        m_PreviousScore = score;
 	}
 
 }

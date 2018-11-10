@@ -10,14 +10,14 @@ public class Projectile : MonoBehaviour
     [HideInInspector]
     public string shooterTag;
 
-    private bool projectileHit = false;
+    private bool m_ProjectileHit = false;
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == shooterTag || col.tag == "WorldBoundary" || projectileHit)
+        if (col.tag == shooterTag || col.tag == "WorldBoundary" || m_ProjectileHit)
             return;
 
-        projectileHit = true;
+        m_ProjectileHit = true;
 
         Actor actor = col.gameObject.GetComponent<Actor>();
         if (actor != null)

@@ -3,52 +3,53 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    private Character character;
+    private Character m_Character;
 
 	void Awake()
 	{
-        character = GetComponent<Character>();
+        m_Character = GetComponent<Character>();
 	}
 
 	void Update()
 	{
-        if (character.CanChangeOrientation())
+        if (m_Character.CanChangeOrientation())
         {
-            character.SetOrientation(GetAimDirection());
+            m_Character.SetOrientation(GetAimDirection());
         }
 
-        if (character.CanShoot() && Input.GetButtonDown("Fire1"))
+        if (m_Character.CanShoot() && Input.GetButtonDown("Fire1"))
         {
-            character.Shoot(character.GetOrientation());
+            m_Character.Shoot(m_Character.GetOrientation());
         }
 
-        if (character.CanUseBomb() && Input.GetButtonDown("Fire2"))
+        if (m_Character.CanUseBomb() && Input.GetButtonDown("Fire2"))
         {
-            character.UseBomb();
+            m_Character.UseBomb();
         }
 
-        if (character.CanJump() && Input.GetButtonDown("Jump"))
+        if (m_Character.CanJump() && Input.GetButtonDown("Jump"))
         {
-            character.Jump(Vector2.up);
+            m_Character.Jump(Vector2.up);
         }
 
         float h = Input.GetAxis("Horizontal");
-        if (character.CanMove())
+        if (m_Character.CanMove())
         {
-            character.Move(h);
+            m_Character.Move(h);
         }
     }
 
     Vector2 GetAimDirection()
     {
+        RangedWeapon rangedWeapon = m_Character.GetRangedWeapon();
         Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        v -= transform.position;
+        v -= rangedWeapon.transform.position;
         v.z = 0.0f;
         v.Normalize();
 
         if (v.sqrMagnitude == 0f)
         {
-            return character.GetOrientation();
+            return m_Character.GetOrientation();
         }
         else
         {

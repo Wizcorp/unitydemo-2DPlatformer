@@ -10,14 +10,11 @@ public class PickupSpawner : MonoBehaviour
 	public float highHealthThreshold = 75f;		// The health of the player, above which only bomb crates will be delivered.
 	public float lowHealthThreshold = 25f;		// The health of the player, below which only health crates will be delivered.
 
-
-	private PlayerCharacter playerHealth;			// Reference to the Player script.
-
+	private PlayerCharacter m_PlayerCharacter;
 
 	void Awake ()
 	{
-		// Setting up the reference.
-		playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>();
+        m_PlayerCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCharacter>();
 	}
 
 
@@ -40,11 +37,11 @@ public class PickupSpawner : MonoBehaviour
 		Vector3 dropPos = new Vector3(dropPosX, 15f, 1f);
 
 		// If the player's health is above the high threshold...
-		if(playerHealth.health >= highHealthThreshold)
+		if(m_PlayerCharacter.health >= highHealthThreshold)
 			// ... instantiate a bomb pickup at the drop position.
 			Instantiate(pickups[0], dropPos, Quaternion.identity);
 		// Otherwise if the player's health is below the low threshold...
-		else if(playerHealth.health <= lowHealthThreshold)
+		else if(m_PlayerCharacter.health <= lowHealthThreshold)
 			// ... instantiate a health pickup at the drop position.
 			Instantiate(pickups[1], dropPos, Quaternion.identity);
 		// Otherwise...

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 61721622380624832}
   - component: {fileID: 114046500224458262}
   m_Layer: 0
-  m_Name: WorldBoundary
+  m_Name: worldBoundary
   m_TagString: WorldBoundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
