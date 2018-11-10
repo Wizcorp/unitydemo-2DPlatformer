@@ -12,15 +12,9 @@ public class Projectile : MonoBehaviour
 
     private bool projectileHit = false;
 
-    protected virtual void FixedUpdate()
-    {
-        if (Mathf.Abs(transform.position.y) > 20)
-            Destroy(gameObject);
-    }
-
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == shooterTag || col.tag == "Bullet" || projectileHit)
+        if (col.tag == shooterTag || col.tag == "WorldBoundary" || projectileHit)
             return;
 
         projectileHit = true;
